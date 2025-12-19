@@ -1,73 +1,126 @@
-# React + TypeScript + Vite
+# Taekwondo app
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## Screenshots
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+### SOON...
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Overview
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### SOON...
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+
+---
+
+## Features
+
+### SOON...
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+Make sure you have the following installed on your system:
+
+* **Node.js** (v16 or later)
+* **npm**
+
+---
+
+### Installation
+
+Clone the repository and navigate to the project directory:
+
+```bash
+git clone https://github.com/afordigital/taekwondo-app.git
+cd taekwondo-app
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Install the dependencies:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
+
+---
+
+### Running the Application
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+You should see output similar to:
+
+```text
+VITE v5.4.11  ready in 438 ms
+
+➜  Local:   http://localhost:5173/
+➜  Network: http://192.168.1.44:5173/
+➜  press h + enter to show help
+```
+
+Open your browser and navigate to:
+
+```
+http://localhost:5173/
+```
+
+---
+
+## Contributing
+
+We welcome contributions to improve the project 🎉
+
+1. Fork the repository
+2. Create a feature branch:
+
+```bash
+git checkout -b feature-name
+```
+
+3. Commit your changes:
+
+```bash
+git commit -m "Add feature-name"
+```
+
+4. Push to the branch:
+
+```bash
+git push origin feature-name
+```
+
+5. Create a Pull Request
+
+---
+
+## Recommended VS Code Extensions
+
+For a better development experience, consider installing:
+
+* ES7+ React/Redux/React-Native snippets
+* Simple React Snippets
+* ESLint
+* Error Lens
+* Bracket Pair Color DLW
+* Auto Rename Tag
+* Auto Close Tag
+* GitLens
+* Auto Import
+* Auto Complete Tag
+
+---
+
+Made by [Comuafor](https://discord.com/invite/comuafor) 🐀
+
