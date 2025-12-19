@@ -1,5 +1,4 @@
 import "./App.css";
-import "video.js/dist/video-js.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Exams } from "./components/Exams";
 import { Login } from "./components/Login";

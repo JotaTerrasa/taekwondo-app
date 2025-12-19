@@ -7,30 +7,34 @@ import {
   MediaMuteButton,
   MediaPlaybackRateButton,
 } from "media-chrome/react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 const SimplePlayer = () => {
-  const mediaControllerRef = useRef(null);
+  const mediaControllerRef = useRef<HTMLMediaElement>(null);
 
   const movementTimestamps = [0, 2.4, 4, 6.5, 9, 12, 15]; // cambiar por el json
-  const currentMovementRef = useRef(0);
+  const [currentMovement, setCurrentMovement] = useState(0);
 
-  const goToMovement = (direction) => {
+  const goToMovement = (direction: "next" | "prev") => {
     if (!mediaControllerRef.current) return;
 
-    const videoElement = mediaControllerRef.current.querySelector("video");
+    const videoElement = mediaControllerRef.current.querySelector(
+      "video"
+    ) as HTMLVideoElement;
     if (!videoElement) return;
 
+    let newMovement = currentMovement;
     if (direction === "next") {
-      currentMovementRef.current = Math.min(
-        currentMovementRef.current + 1,
+      newMovement = Math.min(
+        currentMovement + 1,
         movementTimestamps.length - 1
       );
     } else {
-      currentMovementRef.current = Math.max(currentMovementRef.current - 1, 0);
+      newMovement = Math.max(currentMovement - 1, 0);
     }
 
-    videoElement.currentTime = movementTimestamps[currentMovementRef.current];
+    setCurrentMovement(newMovement);
+    videoElement.currentTime = movementTimestamps[newMovement];
   };
 
   return (
@@ -48,7 +52,7 @@ const SimplePlayer = () => {
         </MediaControlBar>
       </MediaController>
       <button onClick={() => goToMovement("prev")}>Anterior movimiento</button>
-      <p>Won hyo - Movimiento {currentMovementRef.current + 1}</p>
+      <p>Won hyo - Movimiento {currentMovement + 1}</p>
       <button onClick={() => goToMovement("next")}>Siguiente movimiento</button>
     </>
   );

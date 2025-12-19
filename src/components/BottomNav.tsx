@@ -1,14 +1,29 @@
 import { NavLink, useLocation } from "react-router-dom";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, type ReactNode } from "react";
 import { Book, Paperclip, User } from "lucide-react";
+
+type IndicatorStyle = {
+  left: number;
+  width: number;
+};
+
+type NavItem = {
+  to: string;
+  icon: ReactNode;
+  label: string;
+};
 
 export const BottomNav = () => {
   const location = useLocation();
-  const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
-  const navRef = useRef(null);
-  const buttonRefs = useRef({});
+  const [indicatorStyle, setIndicatorStyle] = useState<IndicatorStyle>({
+    left: 0,
+    width: 0,
+  });
 
-  const navItems = [
+  const navRef = useRef<HTMLElement | null>(null);
+  const buttonRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
+
+  const navItems: NavItem[] = [
     {
       to: "/",
       icon: <Book />,
@@ -76,7 +91,6 @@ export const BottomNav = () => {
       role="navigation"
       aria-label="Navegación principal"
     >
-      {/* Indicador animado */}
       <div
         className="absolute top-0 h-0.5 bg-primary-500 rounded-b-full transition-all duration-300 ease-out"
         style={{
@@ -92,7 +106,9 @@ export const BottomNav = () => {
           return (
             <li key={item.to}>
               <NavLink
-                ref={(el) => (buttonRefs.current[item.to] = el)}
+                ref={(el) => {
+                  buttonRefs.current[item.to] = el;
+                }}
                 to={item.to}
                 className={`
                   flex flex-col items-center justify-center gap-1 px-4 py-2 
