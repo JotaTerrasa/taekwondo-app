@@ -1,11 +1,25 @@
+import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, TrendingUp } from 'lucide-react';
 import { Exam, exams } from '../consts/exams';
 import { useProgress } from '../context/ProgressContext';
 
+type FilterType = 'all' | 'gup' | 'dan';
+
 export const Exams = () => {
   const { currentBelt, getCompletedCount, getProgressPercentage } = useProgress();
   const currentExam = exams.find((e) => e.id === currentBelt);
+  const [filter, setFilter] = useState<FilterType>('all');
+
+  const filteredExams = useMemo(() => {
+    if (filter === 'all') {
+      return exams;
+    }
+    return exams.filter((exam) => exam.type === filter);
+  }, [filter]);
+
+  const gupCount = exams.filter((e) => e.type === 'gup').length;
+  const danCount = exams.filter((e) => e.type === 'dan').length;
 
   return (
     <section className="flex flex-col gap-4 pt-4">
@@ -39,9 +53,46 @@ export const Exams = () => {
         </div>
       </div>
 
-      <h1 className="text-xl">Selecciona tu examen</h1>
+      <div className="flex flex-col gap-3">
+        <h1 className="text-xl">Selecciona tu examen</h1>
+        
+        {/* Filtros */}
+        <div className="flex gap-2">
+          <button
+            onClick={() => setFilter('all')}
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+              filter === 'all'
+                ? 'bg-primary-500 text-white'
+                : 'bg-white text-gray-700 border border-gray-300 hover:border-primary-300'
+            }`}
+          >
+            Todos ({exams.length})
+          </button>
+          <button
+            onClick={() => setFilter('gup')}
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+              filter === 'gup'
+                ? 'bg-primary-500 text-white'
+                : 'bg-white text-gray-700 border border-gray-300 hover:border-primary-300'
+            }`}
+          >
+            GUP ({gupCount})
+          </button>
+          <button
+            onClick={() => setFilter('dan')}
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+              filter === 'dan'
+                ? 'bg-primary-500 text-white'
+                : 'bg-white text-gray-700 border border-gray-300 hover:border-primary-300'
+            }`}
+          >
+            DAN ({danCount})
+          </button>
+        </div>
+      </div>
+
       <div className="space-y-4">
-        {exams.map((exam) => (
+        {filteredExams.map((exam) => (
           <ExamCard key={exam.id} exam={exam} />
         ))}
       </div>
