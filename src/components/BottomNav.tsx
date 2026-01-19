@@ -89,7 +89,12 @@ export const BottomNav = ({ isHidden = false }: BottomNavProps) => {
       ref={navRef}
       className={`fixed ${
         isHidden ? 'translate-y-full' : 'translate-y-0'
-      } bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-[0_-2px_10px_rgba(0,0,0,0.05)] z-50 safe-area-bottom`}
+      } bottom-0 left-0 right-0 border-t shadow-[0_-2px_10px_rgba(0,0,0,0.05)] z-50 safe-area-bottom`}
+      style={{
+        backgroundColor: 'var(--card-bg)',
+        borderColor: 'var(--border-color)',
+        boxShadow: '0 -2px 10px var(--shadow)'
+      }}
       aria-label="Navegación principal"
     >
       <div
@@ -115,12 +120,15 @@ export const BottomNav = ({ isHidden = false }: BottomNavProps) => {
                 }}
                 to={item.to}
                 className={`
-                  flex flex-col items-center justify-center gap-1 w-full py-2 
+                  flex flex-col items-center justify-center gap-1 w-full py-2
                   rounded-lg transition-colors duration-200
-                  hover:bg-gray-100 focus:outline-none focus-visible:ring-2 
+                  hover:bg-gray-100 focus:outline-none focus-visible:ring-2
                   focus-visible:ring-primary-500 focus-visible:ring-offset-2
-                  ${isActive ? 'text-primary-500' : '#191919'}
                 `}
+                style={{
+                  color: isActive ? '#800000' : 'var(--text-primary)',
+                  backgroundColor: 'transparent'
+                }}
                 aria-label={item.label}
                 aria-current={isActive ? 'page' : undefined}
               >

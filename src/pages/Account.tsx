@@ -1,10 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
-import { Edit, User, Award } from 'lucide-react';
+import { Edit, User, Award, Sun, Moon, Monitor } from 'lucide-react';
 import { useProgress } from '../context/ProgressContext';
+import { useTheme } from '../context/ThemeContext';
 import { exams } from '../consts/exams';
 
 export const Account = () => {
   const { currentBelt, setCurrentBelt, getCompletedCount, getInProgressCount } = useProgress();
+  const { theme, setTheme, effectiveTheme } = useTheme();
   const [profileData, setProfileData] = useState({
     name: '',
     email: '',
@@ -101,7 +103,12 @@ export const Account = () => {
               type="text"
               value={profileData.name}
               onChange={(e) => handleInputChange('name', e.target.value)}
-              className="w-full h-12 px-4 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              className="w-full h-12 px-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              style={{
+                color: 'var(--text-primary)',
+                backgroundColor: 'var(--card-bg)',
+                borderColor: 'var(--border-color)'
+              }}
               placeholder="Tu nombre"
             />
           </label>
@@ -114,7 +121,12 @@ export const Account = () => {
               type="email"
               value={profileData.email}
               onChange={(e) => handleInputChange('email', e.target.value)}
-              className="w-full h-12 px-4 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              className="w-full h-12 px-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              style={{
+                color: 'var(--text-primary)',
+                backgroundColor: 'var(--card-bg)',
+                borderColor: 'var(--border-color)'
+              }}
               placeholder="tu@email.com"
             />
           </label>
@@ -131,7 +143,12 @@ export const Account = () => {
               <select
                 value={currentBelt}
                 onChange={(e) => setCurrentBelt(e.target.value)}
-                className="flex-1 h-10 px-2 text-gray-900 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+                className="flex-1 h-10 px-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+                style={{
+                  color: 'var(--text-primary)',
+                  backgroundColor: 'var(--card-bg)',
+                  borderColor: 'var(--border-color)'
+                }}
               >
                 {exams.map((exam) => (
                   <option key={exam.id} value={exam.id}>
@@ -141,22 +158,86 @@ export const Account = () => {
               </select>
             </div>
           </div>
+
+          {/* Selector de tema */}
+          <div className="flex flex-col gap-2">
+            <span className="text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
+              Tema de la aplicación
+            </span>
+            <div className="grid grid-cols-3 gap-2">
+              <button
+                onClick={() => setTheme('light')}
+                className={`flex flex-col items-center gap-2 p-3 rounded-lg border-2 transition-all ${
+                  theme === 'light'
+                    ? 'border-primary-500 bg-primary-50 text-primary-700'
+                    : 'border-gray-300 bg-white hover:border-gray-400'
+                }`}
+                style={{
+                  backgroundColor: theme === 'light' ? 'var(--bg-tertiary)' : 'var(--card-bg)',
+                  borderColor: theme === 'light' ? '#800000' : 'var(--border-color)',
+                  color: theme === 'light' ? '#800000' : 'var(--text-primary)'
+                }}
+              >
+                <Sun className={`w-6 h-6 ${theme === 'light' ? 'text-primary-500' : 'text-gray-400'}`} />
+                <span className="text-xs font-medium">Claro</span>
+              </button>
+
+              <button
+                onClick={() => setTheme('dark')}
+                className={`flex flex-col items-center gap-2 p-3 rounded-lg border-2 transition-all ${
+                  theme === 'dark'
+                    ? 'border-primary-500 bg-primary-50 text-primary-700'
+                    : 'border-gray-300 bg-white hover:border-gray-400'
+                }`}
+                style={{
+                  backgroundColor: theme === 'dark' ? 'var(--bg-tertiary)' : 'var(--card-bg)',
+                  borderColor: theme === 'dark' ? '#800000' : 'var(--border-color)',
+                  color: theme === 'dark' ? '#800000' : 'var(--text-primary)'
+                }}
+              >
+                <Moon className={`w-6 h-6 ${theme === 'dark' ? 'text-primary-500' : 'text-gray-400'}`} />
+                <span className="text-xs font-medium">Oscuro</span>
+              </button>
+
+              <button
+                onClick={() => setTheme('system')}
+                className={`flex flex-col items-center gap-2 p-3 rounded-lg border-2 transition-all ${
+                  theme === 'system'
+                    ? 'border-primary-500 bg-primary-50 text-primary-700'
+                    : 'border-gray-300 bg-white hover:border-gray-400'
+                }`}
+                style={{
+                  backgroundColor: theme === 'system' ? 'var(--bg-tertiary)' : 'var(--card-bg)',
+                  borderColor: theme === 'system' ? '#800000' : 'var(--border-color)',
+                  color: theme === 'system' ? '#800000' : 'var(--text-primary)'
+                }}
+              >
+                <Monitor className={`w-6 h-6 ${theme === 'system' ? 'text-primary-500' : 'text-gray-400'}`} />
+                <span className="text-xs font-medium">Sistema</span>
+              </button>
+            </div>
+            <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+              Tema actual: <span className="font-medium">
+                {theme === 'light' ? 'Claro' : theme === 'dark' ? 'Oscuro' : `Sistema (${effectiveTheme === 'dark' ? 'Oscuro' : 'Claro'})`}
+              </span>
+            </p>
+          </div>
         </div>
 
         {/* Estadísticas de progreso */}
-        <div className="flex flex-col gap-3 p-4 mt-4 rounded-lg bg-gray-50">
+        <div className="flex flex-col gap-3 p-4 mt-4 rounded-lg" style={{ backgroundColor: 'var(--bg-secondary)' }}>
           <div className="flex items-center gap-2">
             <Award className="w-5 h-5 text-primary-500" />
             <span className="font-medium text-gray-800">Tu progreso</span>
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <div className="flex flex-col items-center p-3 bg-white rounded-md shadow-xs">
+            <div className="flex flex-col items-center p-3 rounded-md" style={{ backgroundColor: 'var(--card-bg)', boxShadow: '0 1px 3px var(--shadow)' }}>
               <span className="text-2xl font-bold text-green-600">{getCompletedCount()}</span>
-              <span className="text-xs text-gray-500">Tules completados</span>
+              <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Tules completados</span>
             </div>
-            <div className="flex flex-col items-center p-3 bg-white rounded-md shadow-xs">
+            <div className="flex flex-col items-center p-3 rounded-md" style={{ backgroundColor: 'var(--card-bg)', boxShadow: '0 1px 3px var(--shadow)' }}>
               <span className="text-2xl font-bold text-amber-500">{getInProgressCount()}</span>
-              <span className="text-xs text-gray-500">En progreso</span>
+              <span className="text-xs" style={{ color: 'var(--text-muted)' }}>En progreso</span>
             </div>
           </div>
         </div>
