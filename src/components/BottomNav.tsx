@@ -1,6 +1,6 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import { useRef, useEffect, useState, type ReactNode } from 'react';
-import { BookOpenCheck, BookText, UserRound } from 'lucide-react';
+import { BookOpenCheck, BookText, UserRound, BarChart3 } from 'lucide-react';
 
 type IndicatorStyle = {
   left: number;
@@ -30,6 +30,11 @@ export const BottomNav = ({ isHidden = false }: BottomNavProps) => {
   const navItems: NavItem[] = [
     {
       to: '/',
+      icon: <BarChart3 strokeWidth={1.5} />,
+      label: 'Dashboard',
+    },
+    {
+      to: '/exams',
       icon: <BookOpenCheck strokeWidth={1.5} />,
       label: 'Exámenes',
     },
