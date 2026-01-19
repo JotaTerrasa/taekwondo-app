@@ -10,6 +10,7 @@ import { MainLayout } from './pages/MainLayout';
 import { InstallPWA } from './components/InstallPWA';
 import { TulManagement } from './pages/TulManagement';
 import { ExamDetail } from './pages/ExamDetail';
+import { Dashboard } from './pages/Dashboard';
 import { ProgressProvider } from './context/ProgressContext';
 
 function App() {
@@ -36,7 +37,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route element={<MainLayout onLogout={handleLogout} />}>
-            <Route path="/" element={<Exams />} />
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/exams" element={<Exams />} />
             <Route path="/exam/:examId" element={<ExamDetail />} />
             <Route path="/tul/:tulId" element={<TulManagement />} />
             <Route path="/tules" element={<Tules />} />
