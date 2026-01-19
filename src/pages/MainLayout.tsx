@@ -32,7 +32,7 @@ export const MainLayout = ({ onLogout }: MainLayoutProps) => {
   }, []);
 
   return (
-    <div className="flex flex-col w-full h-screen bg-[#F7F7F7] safe-area-top safe-area-bottom overflow-hidden">
+    <div className="flex flex-col w-full h-screen safe-area-top safe-area-bottom overflow-hidden transition-colors" style={{ backgroundColor: 'var(--bg-primary)' }}>
       <div
         className="flex-1 w-full overflow-y-auto"
         style={{ paddingBottom: '80px' }}

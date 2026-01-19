@@ -69,7 +69,11 @@ export const Account = () => {
           <button
             type="button"
             onClick={handleAvatarClick}
-            className="relative flex items-center justify-center w-32 h-32 overflow-hidden transition-colors bg-gray-200 border-4 border-gray-300 rounded-full hover:border-primary-500"
+            className="relative flex items-center justify-center w-32 h-32 overflow-hidden transition-colors border-4 rounded-full hover:border-primary-500"
+            style={{
+              backgroundColor: 'var(--bg-tertiary)',
+              borderColor: 'var(--border-color)'
+            }}
             aria-label="Cambiar foto de perfil"
           >
             {profileData.avatar ? (
@@ -79,7 +83,7 @@ export const Account = () => {
                 className="object-cover w-full h-full"
               />
             ) : (
-              <User className="w-16 h-16 text-gray-400" />
+              <User className="w-16 h-16" style={{ color: 'var(--text-muted)' }} />
             )}
           </button>
           <div className="absolute bottom-0 right-0 flex items-center justify-center w-10 h-10 border-2 border-white rounded-full bg-primary-500">
@@ -98,15 +102,15 @@ export const Account = () => {
         {/* Formulario de datos */}
         <div className="flex flex-col w-full gap-4">
           <label className="flex flex-col gap-2">
-            <span className="text-sm font-medium text-gray-700">Nombre</span>
+            <span className="text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>Nombre</span>
             <input
               type="text"
               value={profileData.name}
               onChange={(e) => handleInputChange('name', e.target.value)}
-              className="w-full h-12 px-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              className="w-full h-12 px-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
               style={{
                 color: 'var(--text-primary)',
-                backgroundColor: 'var(--card-bg)',
+                backgroundColor: 'var(--input-bg)',
                 borderColor: 'var(--border-color)'
               }}
               placeholder="Tu nombre"
@@ -114,17 +118,17 @@ export const Account = () => {
           </label>
 
           <label className="flex flex-col gap-2">
-            <span className="text-sm font-medium text-gray-700">
+            <span className="text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
               Correo electrónico
             </span>
             <input
               type="email"
               value={profileData.email}
               onChange={(e) => handleInputChange('email', e.target.value)}
-              className="w-full h-12 px-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              className="w-full h-12 px-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
               style={{
                 color: 'var(--text-primary)',
-                backgroundColor: 'var(--card-bg)',
+                backgroundColor: 'var(--input-bg)',
                 borderColor: 'var(--border-color)'
               }}
               placeholder="tu@email.com"
@@ -133,25 +137,25 @@ export const Account = () => {
 
           {/* Selector de cinturón */}
           <div className="flex flex-col gap-2">
-            <span className="text-sm font-medium text-gray-700">
+            <span className="text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
               Cinturón actual
             </span>
-            <div className="flex items-center gap-3 p-3 border border-gray-300 rounded-md">
+            <div className="flex items-center gap-3 p-3 border rounded-md transition-colors" style={{ borderColor: 'var(--border-color)', backgroundColor: 'var(--bg-secondary)' }}>
               {currentExam && (
                 <img src={currentExam.img} alt={currentExam.range} className="w-16" />
               )}
               <select
                 value={currentBelt}
                 onChange={(e) => setCurrentBelt(e.target.value)}
-                className="flex-1 h-10 px-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+                className="flex-1 h-10 px-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors"
                 style={{
                   color: 'var(--text-primary)',
-                  backgroundColor: 'var(--card-bg)',
+                  backgroundColor: 'var(--input-bg)',
                   borderColor: 'var(--border-color)'
                 }}
               >
                 {exams.map((exam) => (
-                  <option key={exam.id} value={exam.id}>
+                  <option key={exam.id} value={exam.id} style={{ backgroundColor: 'var(--input-bg)', color: 'var(--text-primary)' }}>
                     {exam.range}
                   </option>
                 ))}
@@ -167,52 +171,40 @@ export const Account = () => {
             <div className="grid grid-cols-3 gap-2">
               <button
                 onClick={() => setTheme('light')}
-                className={`flex flex-col items-center gap-2 p-3 rounded-lg border-2 transition-all ${
-                  theme === 'light'
-                    ? 'border-primary-500 bg-primary-50 text-primary-700'
-                    : 'border-gray-300 bg-white hover:border-gray-400'
-                }`}
+                className="flex flex-col items-center gap-2 p-3 rounded-lg border-2 transition-all hover:scale-105"
                 style={{
-                  backgroundColor: theme === 'light' ? 'var(--bg-tertiary)' : 'var(--card-bg)',
+                  backgroundColor: theme === 'light' ? '#800000' : 'var(--input-bg)',
                   borderColor: theme === 'light' ? '#800000' : 'var(--border-color)',
-                  color: theme === 'light' ? '#800000' : 'var(--text-primary)'
+                  color: theme === 'light' ? '#ffffff' : 'var(--text-secondary)'
                 }}
               >
-                <Sun className={`w-6 h-6 ${theme === 'light' ? 'text-primary-500' : 'text-gray-400'}`} />
+                <Sun className="w-6 h-6" style={{ color: theme === 'light' ? '#ffffff' : 'var(--text-muted)' }} />
                 <span className="text-xs font-medium">Claro</span>
               </button>
 
               <button
                 onClick={() => setTheme('dark')}
-                className={`flex flex-col items-center gap-2 p-3 rounded-lg border-2 transition-all ${
-                  theme === 'dark'
-                    ? 'border-primary-500 bg-primary-50 text-primary-700'
-                    : 'border-gray-300 bg-white hover:border-gray-400'
-                }`}
+                className="flex flex-col items-center gap-2 p-3 rounded-lg border-2 transition-all hover:scale-105"
                 style={{
-                  backgroundColor: theme === 'dark' ? 'var(--bg-tertiary)' : 'var(--card-bg)',
+                  backgroundColor: theme === 'dark' ? '#800000' : 'var(--input-bg)',
                   borderColor: theme === 'dark' ? '#800000' : 'var(--border-color)',
-                  color: theme === 'dark' ? '#800000' : 'var(--text-primary)'
+                  color: theme === 'dark' ? '#ffffff' : 'var(--text-secondary)'
                 }}
               >
-                <Moon className={`w-6 h-6 ${theme === 'dark' ? 'text-primary-500' : 'text-gray-400'}`} />
+                <Moon className="w-6 h-6" style={{ color: theme === 'dark' ? '#ffffff' : 'var(--text-muted)' }} />
                 <span className="text-xs font-medium">Oscuro</span>
               </button>
 
               <button
                 onClick={() => setTheme('system')}
-                className={`flex flex-col items-center gap-2 p-3 rounded-lg border-2 transition-all ${
-                  theme === 'system'
-                    ? 'border-primary-500 bg-primary-50 text-primary-700'
-                    : 'border-gray-300 bg-white hover:border-gray-400'
-                }`}
+                className="flex flex-col items-center gap-2 p-3 rounded-lg border-2 transition-all hover:scale-105"
                 style={{
-                  backgroundColor: theme === 'system' ? 'var(--bg-tertiary)' : 'var(--card-bg)',
+                  backgroundColor: theme === 'system' ? '#800000' : 'var(--input-bg)',
                   borderColor: theme === 'system' ? '#800000' : 'var(--border-color)',
-                  color: theme === 'system' ? '#800000' : 'var(--text-primary)'
+                  color: theme === 'system' ? '#ffffff' : 'var(--text-secondary)'
                 }}
               >
-                <Monitor className={`w-6 h-6 ${theme === 'system' ? 'text-primary-500' : 'text-gray-400'}`} />
+                <Monitor className="w-6 h-6" style={{ color: theme === 'system' ? '#ffffff' : 'var(--text-muted)' }} />
                 <span className="text-xs font-medium">Sistema</span>
               </button>
             </div>
@@ -225,17 +217,17 @@ export const Account = () => {
         </div>
 
         {/* Estadísticas de progreso */}
-        <div className="flex flex-col gap-3 p-4 mt-4 rounded-lg" style={{ backgroundColor: 'var(--bg-secondary)' }}>
+        <div className="flex flex-col gap-3 p-4 mt-4 rounded-lg transition-colors" style={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-color)' }}>
           <div className="flex items-center gap-2">
             <Award className="w-5 h-5 text-primary-500" />
-            <span className="font-medium text-gray-800">Tu progreso</span>
+            <span className="font-medium" style={{ color: 'var(--text-primary)' }}>Tu progreso</span>
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <div className="flex flex-col items-center p-3 rounded-md" style={{ backgroundColor: 'var(--card-bg)', boxShadow: '0 1px 3px var(--shadow)' }}>
+            <div className="flex flex-col items-center p-3 rounded-md transition-colors" style={{ backgroundColor: 'var(--card-bg)', boxShadow: '0 1px 3px var(--shadow)', border: '1px solid var(--border-color)' }}>
               <span className="text-2xl font-bold text-green-600">{getCompletedCount()}</span>
               <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Tules completados</span>
             </div>
-            <div className="flex flex-col items-center p-3 rounded-md" style={{ backgroundColor: 'var(--card-bg)', boxShadow: '0 1px 3px var(--shadow)' }}>
+            <div className="flex flex-col items-center p-3 rounded-md transition-colors" style={{ backgroundColor: 'var(--card-bg)', boxShadow: '0 1px 3px var(--shadow)', border: '1px solid var(--border-color)' }}>
               <span className="text-2xl font-bold text-amber-500">{getInProgressCount()}</span>
               <span className="text-xs" style={{ color: 'var(--text-muted)' }}>En progreso</span>
             </div>

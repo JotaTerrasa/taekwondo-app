@@ -13,10 +13,16 @@ export const Header = ({ onMenuToggle }: HeaderProps) => {
 
       <button
         onClick={onMenuToggle}
-        className="transition-colors duration-200 rounded-lg hover:bg-gray-100"
+        className="transition-colors duration-200 rounded-lg"
+        style={{
+          color: 'var(--text-primary)',
+          backgroundColor: 'transparent'
+        }}
+        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--hover-bg)'}
+        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
         aria-label="Abrir menú"
       >
-        <Menu className="w-6 h-6" />
+        <Menu className="w-6 h-6" style={{ color: 'var(--text-primary)' }} />
       </button>
     </header>
   );

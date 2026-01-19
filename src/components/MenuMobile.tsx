@@ -58,11 +58,12 @@ export const MenuMobile = ({ isOpen, onClose, onLogout }: MenuMobileProps) => {
 
   return (
     <div
-      className={`fixed inset-0 bg-white transform transition-transform duration-300 ease-in-out z-50 flex flex-col ${
+      className={`fixed inset-0 transform transition-transform duration-300 ease-in-out z-50 flex flex-col ${
         isOpen ? 'translate-x-0' : 'translate-x-full'
       }`}
+      style={{ backgroundColor: 'var(--card-bg)' }}
     >
-      <header className="flex items-center justify-between flex-none w-full p-2 border-b safe-area-top">
+      <header className="flex items-center justify-between flex-none w-full p-2 border-b safe-area-top transition-colors" style={{ borderColor: 'var(--border-color)' }}>
         <a href="/">
           <img src="/imgs/logo.webp" width={80} alt="logo escuela" />
         </a>
@@ -70,10 +71,16 @@ export const MenuMobile = ({ isOpen, onClose, onLogout }: MenuMobileProps) => {
         <button
           onClick={onClose}
           type="button"
-          className="p-2 transition-colors duration-200 rounded-lg hover:bg-gray-100"
+          className="p-2 transition-colors duration-200 rounded-lg"
+          style={{
+            color: 'var(--text-primary)',
+            backgroundColor: 'transparent'
+          }}
+          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--hover-bg)'}
+          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
           aria-label="Cerrar menú"
         >
-          <X width={24} height={24} />
+          <X width={24} height={24} style={{ color: 'var(--text-primary)' }} />
         </button>
       </header>
 
@@ -85,25 +92,30 @@ export const MenuMobile = ({ isOpen, onClose, onLogout }: MenuMobileProps) => {
               key={item.to}
               to={item.to}
               onClick={onClose}
-              className={`flex items-center gap-4 px-6 py-4 transition-all duration-200 ${
-                isActive
-                  ? 'bg-primary/10 text-primary border-l-4 border-primary'
-                  : 'text-gray-700 hover:bg-gray-50'
-              }`}
+              className="flex items-center gap-4 px-6 py-4 transition-all duration-200"
               style={{
                 animation: isOpen
                   ? `slideIn 0.3s ease-out ${index * 0.05}s both`
                   : 'none',
+                backgroundColor: isActive ? 'rgba(128, 0, 0, 0.1)' : 'transparent',
+                color: isActive ? '#800000' : 'var(--text-primary)',
+                borderLeft: isActive ? '4px solid #800000' : 'none'
+              }}
+              onMouseEnter={(e) => {
+                if (!isActive) e.currentTarget.style.backgroundColor = 'var(--hover-bg)';
+              }}
+              onMouseLeave={(e) => {
+                if (!isActive) e.currentTarget.style.backgroundColor = 'transparent';
               }}
             >
-              <span className="shrink-0">{item.icon}</span>
+              <span className="shrink-0" style={{ color: isActive ? '#800000' : 'var(--text-primary)' }}>{item.icon}</span>
               <span className="text-lg font-medium">{item.label}</span>
             </Link>
           );
         })}
       </nav>
 
-      <div className="flex-none px-6 pt-4 pb-6 border-t border-gray-200 safe-area-bottom">
+      <div className="flex-none px-6 pt-4 pb-6 border-t safe-area-bottom transition-colors" style={{ borderColor: 'var(--border-color)' }}>
         <Button handleClick={onLogout}>Cerrar sesión</Button>
       </div>
 
