@@ -1,6 +1,8 @@
 import { useProgress } from '../context/ProgressContext';
 import { tuls } from '../consts/tuls';
-import { Trophy, Target, TrendingUp, Calendar } from 'lucide-react';
+import { Trophy, Target, TrendingUp, Calendar, Award } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { achievements } from '../consts/achievements';
 
 export const Dashboard = () => {
   const {
@@ -8,7 +10,11 @@ export const Dashboard = () => {
     getCompletedCount,
     getInProgressCount,
     currentBelt,
-    tulProgress
+    tulProgress,
+    unlockedAchievements,
+    currentStreak,
+    completedExams,
+    studiedTheorySessions
   } = useProgress();
 
   const totalTuls = tuls.length;
@@ -17,8 +23,15 @@ export const Dashboard = () => {
   const progressPercentage = getProgressPercentage();
 
   // Calcular estadísticas adicionales
-  const daysPracticing = Math.floor((Date.now() - new Date('2024-01-01').getTime()) / (1000 * 60 * 60 * 24)); // Simulado
-  const streakDays = 7; // Simulado - se podría calcular basado en actividad real
+  const daysPracticing = Math.floor((Date.now() - new Date('2024-01-01').getTime()) / (1000 * 60 * 60 * 24));
+  const streakDays = currentStreak;
+
+  // Logros recientes (últimos 3 desbloqueados)
+  const recentAchievements = unlockedAchievements
+    .sort((a, b) => new Date(b.unlockedAt).getTime() - new Date(a.unlockedAt).getTime())
+    .slice(0, 3)
+    .map(ua => achievements.find(a => a.id === ua.achievementId)!)
+    .filter(Boolean);
 
   const stats = [
     {
@@ -43,11 +56,11 @@ export const Dashboard = () => {
       bgColor: 'bg-orange-50'
     },
     {
-      title: 'Racha Actual',
-      value: `${streakDays} días`,
-      icon: <Calendar className="w-6 h-6" />,
-      color: 'text-purple-500',
-      bgColor: 'bg-purple-50'
+      title: 'Logros',
+      value: `${unlockedAchievements.length}`,
+      icon: <Award className="w-6 h-6" />,
+      color: 'text-yellow-500',
+      bgColor: 'bg-yellow-50'
     }
   ];
 
@@ -138,6 +151,43 @@ export const Dashboard = () => {
             <span className="text-xs text-gray-500">Hace 1 semana</span>
           </div>
         </div>
+      </div>
+
+      {/* Logros recientes */}
+      <div className="p-6 bg-white border border-gray-200 rounded-lg">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-semibold flex items-center gap-2">
+            <Award className="w-5 h-5 text-yellow-500" />
+            Logros Recientes
+          </h2>
+          <Link
+            to="/achievements"
+            className="text-primary-500 hover:text-primary-600 text-sm font-medium"
+          >
+            Ver todos →
+          </Link>
+        </div>
+
+        {recentAchievements.length > 0 ? (
+          <div className="space-y-3">
+            {recentAchievements.map((achievement) => (
+              <div key={achievement.id} className="flex items-center gap-3 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                <span className="text-2xl">{achievement.icon}</span>
+                <div className="flex-1">
+                  <h4 className="font-semibold text-sm">{achievement.title}</h4>
+                  <p className="text-xs text-gray-600">{achievement.description}</p>
+                </div>
+                <Trophy className="w-4 h-4 text-yellow-500" />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-8">
+            <Award className="w-12 h-12 text-gray-300 mx-auto mb-2" />
+            <p className="text-sm text-gray-500">Aún no has desbloqueado logros</p>
+            <p className="text-xs text-gray-400 mt-1">¡Sigue practicando para conseguirlos!</p>
+          </div>
+        )}
       </div>
     </section>
   );

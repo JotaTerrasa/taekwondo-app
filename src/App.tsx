@@ -11,6 +11,7 @@ import { InstallPWA } from './components/InstallPWA';
 import { TulManagement } from './pages/TulManagement';
 import { ExamDetail } from './pages/ExamDetail';
 import { Dashboard } from './pages/Dashboard';
+import { Achievements } from './pages/Achievements';
 import { ProgressProvider } from './context/ProgressContext';
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
             <Route path="/tul/:tulId" element={<TulManagement />} />
             <Route path="/tules" element={<Tules />} />
             <Route path="/theory" element={<Theory />} />
+            <Route path="/achievements" element={<Achievements />} />
             <Route path="/account" element={<Account />} />
           </Route>
         </Routes>

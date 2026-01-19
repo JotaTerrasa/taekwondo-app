@@ -1,6 +1,6 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import { useRef, useEffect, useState, type ReactNode } from 'react';
-import { BookOpenCheck, BookText, UserRound, BarChart3 } from 'lucide-react';
+import { BookOpenCheck, BookText, UserRound, BarChart3, Trophy } from 'lucide-react';
 
 type IndicatorStyle = {
   left: number;
@@ -49,6 +49,11 @@ export const BottomNav = ({ isHidden = false }: BottomNavProps) => {
       to: '/theory',
       icon: <BookText strokeWidth={1.25} />,
       label: 'Teoría',
+    },
+    {
+      to: '/achievements',
+      icon: <Trophy strokeWidth={1.5} />,
+      label: 'Logros',
     },
     {
       to: '/account',
