@@ -228,11 +228,11 @@ export const getRarityColor = (rarity: Achievement['rarity']): string => {
     case 'common':
       return 'theme-text-secondary theme-bg-tertiary';
     case 'rare':
-      return 'text-blue-600 bg-blue-100';
+      return 'theme-text-secondary theme-bg-tertiary';
     case 'epic':
-      return 'text-purple-600 bg-purple-100';
+      return 'theme-text-secondary theme-bg-tertiary';
     case 'legendary':
-      return 'text-yellow-600 bg-yellow-100';
+      return 'theme-text-secondary theme-bg-tertiary';
     default:
       return 'theme-text-secondary theme-bg-tertiary';
   }

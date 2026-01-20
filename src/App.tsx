@@ -14,6 +14,7 @@ import { Dashboard } from './pages/Dashboard';
 import { Achievements } from './pages/Achievements';
 import { ProgressProvider } from './context/ProgressContext';
 import { ThemeProvider } from './context/ThemeContext';
+import { NotificationProvider } from './context/NotificationContext';
 
 function App() {
   const [isLogged, setIsLogged] = useState(() => {
@@ -35,24 +36,26 @@ function App() {
   };
 
   const appContent = isLogged ? (
-    <ProgressProvider>
-      <ThemeProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route element={<MainLayout onLogout={handleLogout} />}>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/exams" element={<Exams />} />
-              <Route path="/exam/:examId" element={<ExamDetail />} />
-              <Route path="/tul/:tulId" element={<TulManagement />} />
-              <Route path="/tules" element={<Tules />} />
-              <Route path="/theory" element={<Theory />} />
-              <Route path="/achievements" element={<Achievements />} />
-              <Route path="/account" element={<Account />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </ThemeProvider>
-    </ProgressProvider>
+    <ThemeProvider>
+      <NotificationProvider>
+        <ProgressProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route element={<MainLayout onLogout={handleLogout} />}>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/exams" element={<Exams />} />
+                <Route path="/exam/:examId" element={<ExamDetail />} />
+                <Route path="/tul/:tulId" element={<TulManagement />} />
+                <Route path="/tules" element={<Tules />} />
+                <Route path="/theory" element={<Theory />} />
+                <Route path="/achievements" element={<Achievements />} />
+                <Route path="/account" element={<Account />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </ProgressProvider>
+      </NotificationProvider>
+    </ThemeProvider>
   ) : (
     <Login onLoginSuccess={handleLoginSuccess} />
   );
