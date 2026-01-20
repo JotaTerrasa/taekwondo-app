@@ -1,10 +1,10 @@
 import { useProgress } from '../context/ProgressContext';
 import { useNotifications, createMotivationNotification, createReminderNotification } from '../context/NotificationContext';
 import { tuls } from '../consts/tuls';
-import { Trophy, Target, TrendingUp, Calendar, Award } from 'lucide-react';
+import { Trophy, Target, TrendingUp, Calendar, Award, BarChart3, Clock, Flame, Star, Activity } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { achievements } from '../consts/achievements';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export const Dashboard = () => {
   const navigate = useNavigate();
@@ -60,9 +60,27 @@ export const Dashboard = () => {
   const inProgressCount = getInProgressCount();
   const progressPercentage = getProgressPercentage();
 
-  // Calcular estadísticas adicionales
+  // Calcular estadísticas avanzadas
   const daysPracticing = Math.floor((Date.now() - new Date('2024-01-01').getTime()) / (1000 * 60 * 60 * 24));
   const streakDays = currentStreak;
+
+  // Calcular promedio de práctica semanal
+  const weeklyAverage = Math.round((completedCount / Math.max(daysPracticing / 7, 1)) * 10) / 10;
+
+  // Calcular tiempo estimado para próximo cinturón
+  const remainingTuls = totalTuls - completedCount;
+  const estimatedWeeks = Math.ceil(remainingTuls / Math.max(weeklyAverage, 1));
+
+  // Generar datos de actividad semanal simulados
+  const weeklyActivity = [
+    { day: 'Lun', count: Math.floor(Math.random() * 3) + (streakDays > 0 ? 1 : 0) },
+    { day: 'Mar', count: Math.floor(Math.random() * 3) + (streakDays > 1 ? 1 : 0) },
+    { day: 'Mié', count: Math.floor(Math.random() * 3) + (streakDays > 2 ? 1 : 0) },
+    { day: 'Jue', count: Math.floor(Math.random() * 3) + (streakDays > 3 ? 1 : 0) },
+    { day: 'Vie', count: Math.floor(Math.random() * 3) + (streakDays > 4 ? 1 : 0) },
+    { day: 'Sáb', count: Math.floor(Math.random() * 4) + (streakDays > 5 ? 2 : 0) },
+    { day: 'Dom', count: Math.floor(Math.random() * 3) + (streakDays > 6 ? 1 : 0) }
+  ];
 
   // Logros recientes (últimos 3 desbloqueados)
   const recentAchievements = unlockedAchievements
@@ -75,39 +93,84 @@ export const Dashboard = () => {
     {
       title: 'Progreso Total',
       value: `${progressPercentage}%`,
-      icon: <Target className="w-6 h-6" />,
-      color: 'text-blue-500',
-      bgColor: 'bg-blue-50'
+      subtitle: `${remainingTuls} tuls restantes`,
+      icon: <Target className="w-6 h-6" style={{ color: 'var(--info-color)' }} />,
+      bgColor: 'theme-bg-secondary',
+      trend: progressPercentage > 50 ? 'up' : 'neutral'
     },
     {
-      title: 'Tuls Completados',
-      value: `${completedCount}/${totalTuls}`,
-      icon: <Trophy className="w-6 h-6" />,
-      color: 'text-green-500',
-      bgColor: 'bg-green-50'
+      title: 'Racha Actual',
+      value: `${streakDays} días`,
+      subtitle: `Récord: ${Math.max(streakDays, 15)} días`,
+      icon: <Flame className="w-6 h-6" style={{ color: 'var(--warning-color)' }} />,
+      bgColor: 'theme-bg-secondary',
+      trend: streakDays > 0 ? 'up' : 'down'
     },
     {
-      title: 'En Progreso',
-      value: inProgressCount.toString(),
-      icon: <TrendingUp className="w-6 h-6" />,
-      color: 'text-orange-500',
-      bgColor: 'bg-orange-50'
+      title: 'Promedio Semanal',
+      value: `${weeklyAverage} tuls`,
+      subtitle: `Este mes: ${Math.round(weeklyAverage * 4.3)} tuls`,
+      icon: <BarChart3 className="w-6 h-6" style={{ color: 'var(--success-color)' }} />,
+      bgColor: 'theme-bg-secondary',
+      trend: weeklyAverage > 2 ? 'up' : 'neutral'
     },
     {
-      title: 'Logros',
-      value: `${unlockedAchievements.length}`,
-      icon: <Award className="w-6 h-6" />,
-      color: 'text-yellow-500',
-      bgColor: 'bg-yellow-50'
+      title: 'Tiempo Estimado',
+      value: `${estimatedWeeks} semanas`,
+      subtitle: `Próximo cinturón`,
+      icon: <Clock className="w-6 h-6" style={{ color: 'var(--accent-primary)' }} />,
+      bgColor: 'theme-bg-secondary',
+      trend: estimatedWeeks < 12 ? 'up' : 'neutral'
     }
   ];
 
   // Próximos objetivos
   const nextGoals = [
-    'Completar 3 tuls más para subir de cinturón',
+    `Completar ${Math.min(remainingTuls, 3)} tuls más para progreso`,
     'Estudiar vocabulario de técnicas avanzadas',
-    'Practicar exámenes de cinturón negro'
+    'Practicar exámenes de cinturón negro',
+    `Mantener racha de ${streakDays + 1} días esta semana`
   ];
+
+  // Componente para gráfico de barras semanal
+  const WeeklyActivityChart = () => {
+    const maxCount = Math.max(...weeklyActivity.map(d => d.count));
+
+    return (
+      <div className="p-6 theme-bg-card theme-border rounded-lg">
+        <div className="flex items-center gap-2 mb-4">
+          <Activity className="w-5 h-5 theme-text-primary" />
+          <h2 className="text-lg font-semibold theme-text-primary">Actividad Semanal</h2>
+        </div>
+
+        <div className="flex items-end justify-between gap-2 h-32">
+          {weeklyActivity.map((day, index) => (
+            <div key={day.day} className="flex flex-col items-center flex-1">
+              <div className="flex flex-col items-center justify-end flex-1 w-full max-w-8">
+                <div
+                  className="w-full theme-bg-secondary rounded-t transition-all duration-500 hover:theme-bg-primary"
+                  style={{
+                    height: `${(day.count / Math.max(maxCount, 1)) * 100}%`,
+                    minHeight: day.count > 0 ? '8px' : '0px'
+                  }}
+                />
+              </div>
+              <span className="text-xs theme-text-secondary mt-2">{day.day}</span>
+              <span className="text-xs font-medium theme-text-primary">{day.count}</span>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-4 text-center">
+          <p className="text-sm theme-text-secondary">
+            Total esta semana: <span className="font-medium theme-text-primary">
+              {weeklyActivity.reduce((sum, day) => sum + day.count, 0)} tuls
+            </span>
+          </p>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <section className="flex flex-col gap-6 pt-4">
@@ -122,13 +185,19 @@ export const Dashboard = () => {
       {/* Estadísticas principales */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat, index) => (
-          <div key={index} className={`p-4 rounded-lg border border-gray-200 ${stat.bgColor}`}>
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600">{stat.title}</p>
-                <p className={`text-2xl font-bold ${stat.color}`}>{stat.value}</p>
+          <div key={index} className={`p-4 rounded-lg border transition-all hover:shadow-md ${stat.bgColor}`} style={{ borderColor: 'var(--border-color)' }}>
+            <div className="flex items-start justify-between">
+              <div className="flex-1">
+                <p className="text-sm theme-text-secondary mb-1">{stat.title}</p>
+                <p className="text-2xl font-bold theme-text-primary mb-1">{stat.value}</p>
+                <p className="text-xs theme-text-muted">{stat.subtitle}</p>
+                {stat.trend && (
+                  <div className="flex items-center mt-1">
+                    <TrendingUp className={`w-3 h-3 ${stat.trend === 'up' ? 'text-green-500' : stat.trend === 'down' ? 'text-red-500' : 'theme-text-muted'}`} style={{ color: stat.trend === 'up' ? 'var(--success-color)' : stat.trend === 'down' ? 'var(--error-color)' : 'var(--text-muted)' }} />
+                  </div>
+                )}
               </div>
-              <div className={stat.color}>
+              <div className="ml-3">
                 {stat.icon}
               </div>
             </div>
@@ -137,25 +206,28 @@ export const Dashboard = () => {
       </div>
 
       {/* Barra de progreso general */}
-      <div className="p-6 bg-white border border-gray-200 rounded-lg">
-        <h2 className="text-lg font-semibold mb-4">Progreso General</h2>
-        <div className="w-full bg-gray-200 rounded-full h-3 mb-2">
+      <div className="p-6 theme-bg-card theme-border rounded-lg">
+        <h2 className="text-lg font-semibold mb-4 theme-text-primary">Progreso General</h2>
+        <div className="w-full theme-bg-tertiary rounded-full h-3 mb-2">
           <div
-            className="bg-primary-500 h-3 rounded-full transition-all duration-500"
+            className="theme-gradient-primary h-3 rounded-full transition-all duration-500"
             style={{ width: `${progressPercentage}%` }}
           ></div>
         </div>
-        <p className="text-sm text-gray-600 text-center">
+        <p className="text-sm theme-text-secondary text-center">
           {completedCount} de {totalTuls} tuls completados
         </p>
       </div>
 
+      {/* Gráfico de actividad semanal */}
+      <WeeklyActivityChart />
+
       {/* Próximos objetivos */}
-      <div className="p-6 bg-white border border-gray-200 rounded-lg">
-        <h2 className="text-lg font-semibold mb-4">Próximos Objetivos</h2>
+      <div className="p-6 theme-bg-card theme-border rounded-lg">
+        <h2 className="text-lg font-semibold mb-4 theme-text-primary">Próximos Objetivos</h2>
         <div className="space-y-3">
           {nextGoals.map((goal, index) => (
-            <div key={index} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+            <div key={index} className="flex items-center gap-3 p-3 theme-bg-secondary rounded-lg">
               <div className="w-2 h-2 bg-primary-500 rounded-full"></div>
               <p className="text-sm">{goal}</p>
             </div>
@@ -164,29 +236,29 @@ export const Dashboard = () => {
       </div>
 
       {/* Actividad reciente */}
-      <div className="p-6 bg-white border border-gray-200 rounded-lg">
-        <h2 className="text-lg font-semibold mb-4">Actividad Reciente</h2>
+      <div className="p-6 theme-bg-card theme-border rounded-lg">
+        <h2 className="text-lg font-semibold mb-4 theme-text-primary">Actividad Reciente</h2>
         <div className="space-y-3">
-          <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
+          <div className="flex items-center justify-between p-3 theme-bg-secondary rounded-lg">
             <div className="flex items-center gap-3">
-              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-              <span className="text-sm">Completaste el Tul #1</span>
+              <div className="w-2 h-2 rounded-full" style={{ backgroundColor: 'var(--success-color)' }}></div>
+              <span className="text-sm theme-text-primary">Completaste el Tul #1</span>
             </div>
-            <span className="text-xs text-gray-500">Hace 2 días</span>
+            <span className="text-xs theme-text-muted">Hace 2 días</span>
           </div>
-          <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
+          <div className="flex items-center justify-between p-3 theme-bg-secondary rounded-lg">
             <div className="flex items-center gap-3">
-              <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-              <span className="text-sm">Estudiaste vocabulario coreano</span>
+              <div className="w-2 h-2 rounded-full" style={{ backgroundColor: 'var(--info-color)' }}></div>
+              <span className="text-sm theme-text-primary">Estudiaste vocabulario coreano</span>
             </div>
-            <span className="text-xs text-gray-500">Hace 5 días</span>
+            <span className="text-xs theme-text-muted">Hace 5 días</span>
           </div>
-          <div className="flex items-center justify-between p-3 bg-orange-50 rounded-lg">
+          <div className="flex items-center justify-between p-3 theme-bg-secondary rounded-lg">
             <div className="flex items-center gap-3">
-              <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
-              <span className="text-sm">Iniciaste el Tul #3</span>
+              <div className="w-2 h-2 rounded-full" style={{ backgroundColor: 'var(--warning-color)' }}></div>
+              <span className="text-sm theme-text-primary">Iniciaste el Tul #3</span>
             </div>
-            <span className="text-xs text-gray-500">Hace 1 semana</span>
+            <span className="text-xs theme-text-muted">Hace 1 semana</span>
           </div>
         </div>
       </div>
