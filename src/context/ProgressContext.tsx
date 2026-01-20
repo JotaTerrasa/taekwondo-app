@@ -96,6 +96,11 @@ const ProgressProviderInner = ({ children }: ProgressProviderProps) => {
     return Math.min((progressPoints / 100) * 100, 100);
   };
 
+  const [tulProgress, setTulProgress] = useState<TulProgress>(() => {
+    const saved = localStorage.getItem('tulProgress');
+    return saved ? JSON.parse(saved) : {};
+  });
+
   // Auto-otorgar puntos por actividades completadas
   useEffect(() => {
     const completedTuls = getCompletedCount();
@@ -119,11 +124,6 @@ const ProgressProviderInner = ({ children }: ProgressProviderProps) => {
       localStorage.setItem('lastPointsCalculation_achievements', unlockedAchievements.length.toString());
     }
   }, [unlockedAchievements]);
-
-  const [tulProgress, setTulProgress] = useState<TulProgress>(() => {
-    const saved = localStorage.getItem('tulProgress');
-    return saved ? JSON.parse(saved) : {};
-  });
 
   // Achievement system state
   const [unlockedAchievements, setUnlockedAchievements] = useState<UserAchievement[]>(() => {

@@ -12,7 +12,6 @@ export const Dashboard = () => {
   const {
     getProgressPercentage,
     getCompletedCount,
-    getInProgressCount,
     currentBelt,
     unlockedAchievements,
     currentStreak,
@@ -143,7 +142,7 @@ export const Dashboard = () => {
         </div>
 
         <div className="flex items-end justify-between gap-2 h-32">
-          {weeklyActivity.map((day, index) => (
+          {weeklyActivity.map((day) => (
             <div key={day.day} className="flex flex-col items-center flex-1">
               <div className="flex flex-col items-center justify-end flex-1 w-full max-w-8">
                 <div
