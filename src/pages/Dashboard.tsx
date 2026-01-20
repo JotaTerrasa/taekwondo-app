@@ -1,7 +1,7 @@
 import { useProgress } from '../context/ProgressContext';
 import { useNotifications, createMotivationNotification, createReminderNotification } from '../context/NotificationContext';
 import { tuls } from '../consts/tuls';
-import { Trophy, Target, TrendingUp, Calendar, Award, BarChart3, Clock, Flame, Star, Activity } from 'lucide-react';
+import { Trophy, Target, TrendingUp, Calendar, Award, BarChart3, Clock, Flame, Star, Activity, Zap } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { achievements } from '../consts/achievements';
 import { useEffect, useState } from 'react';
@@ -18,7 +18,11 @@ export const Dashboard = () => {
     unlockedAchievements,
     currentStreak,
     completedExams,
-    studiedTheorySessions
+    studiedTheorySessions,
+    totalPoints,
+    currentLevel,
+    pointsToNextLevel,
+    getLevelProgress
   } = useProgress();
 
   // Notificaciones de bienvenida y motivación
@@ -115,12 +119,12 @@ export const Dashboard = () => {
       trend: weeklyAverage > 2 ? 'up' : 'neutral'
     },
     {
-      title: 'Tiempo Estimado',
-      value: `${estimatedWeeks} semanas`,
-      subtitle: `Próximo cinturón`,
-      icon: <Clock className="w-6 h-6" style={{ color: 'var(--accent-primary)' }} />,
+      title: 'Nivel',
+      value: `${currentLevel}`,
+      subtitle: `${pointsToNextLevel} puntos para nivel ${currentLevel + 1}`,
+      icon: <Zap className="w-6 h-6" style={{ color: 'var(--accent-primary)' }} />,
       bgColor: 'theme-bg-secondary',
-      trend: estimatedWeeks < 12 ? 'up' : 'neutral'
+      trend: 'up'
     }
   ];
 
@@ -221,6 +225,35 @@ export const Dashboard = () => {
 
       {/* Gráfico de actividad semanal */}
       <WeeklyActivityChart />
+
+      {/* Barra de progreso de nivel */}
+      <div className="p-6 theme-bg-card theme-border rounded-lg">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-semibold theme-text-primary">Progreso de Nivel</h2>
+          <div className="flex items-center gap-2">
+            <Star className="w-5 h-5" style={{ color: 'var(--warning-color)' }} />
+            <span className="font-bold text-lg theme-text-primary">
+              Nivel {currentLevel}
+            </span>
+          </div>
+        </div>
+
+        <div className="w-full theme-bg-tertiary rounded-full h-3 mb-2">
+          <div
+            className="theme-gradient-primary h-3 rounded-full transition-all duration-500"
+            style={{ width: `${getLevelProgress()}%` }}
+          ></div>
+        </div>
+
+        <div className="flex justify-between text-sm theme-text-secondary">
+          <span>{totalPoints} puntos</span>
+          <span>{currentLevel * 100} puntos</span>
+        </div>
+
+        <p className="text-sm theme-text-secondary mt-2 text-center">
+          {pointsToNextLevel} puntos más para alcanzar el nivel {currentLevel + 1}
+        </p>
+      </div>
 
       {/* Próximos objetivos */}
       <div className="p-6 theme-bg-card theme-border rounded-lg">
