@@ -52,9 +52,6 @@ type ProgressProviderProps = {
 
 // Sistema de puntos y niveles
 const POINTS_PER_TUL_COMPLETION = 50;
-const POINTS_PER_THEORY_SESSION = 20;
-const POINTS_PER_EXAM_COMPLETION = 100;
-const POINTS_PER_STREAK_DAY = 10;
 const POINTS_PER_ACHIEVEMENT = 25;
 
 const getLevelFromPoints = (points: number): number => {
@@ -83,7 +80,7 @@ const ProgressProviderInner = ({ children }: ProgressProviderProps) => {
   const pointsToNextLevel = getPointsForNextLevel(currentLevel) - totalPoints;
 
   // Función para agregar puntos
-  const addPoints = (points: number, reason: string) => {
+  const addPoints = (points: number, _reason: string) => {
     setTotalPoints(prev => {
       const newTotal = prev + points;
       localStorage.setItem('totalPoints', newTotal.toString());

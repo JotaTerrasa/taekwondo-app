@@ -1,10 +1,10 @@
 import { useProgress } from '../context/ProgressContext';
 import { useNotifications, createMotivationNotification, createReminderNotification } from '../context/NotificationContext';
 import { tuls } from '../consts/tuls';
-import { Trophy, Target, TrendingUp, Calendar, Award, BarChart3, Clock, Flame, Star, Activity, Zap } from 'lucide-react';
+import { Trophy, Target, TrendingUp, Award, BarChart3, Flame, Star, Activity, Zap } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { achievements } from '../consts/achievements';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 export const Dashboard = () => {
   const navigate = useNavigate();
@@ -14,11 +14,8 @@ export const Dashboard = () => {
     getCompletedCount,
     getInProgressCount,
     currentBelt,
-    tulProgress,
     unlockedAchievements,
     currentStreak,
-    completedExams,
-    studiedTheorySessions,
     totalPoints,
     currentLevel,
     pointsToNextLevel,
@@ -61,7 +58,6 @@ export const Dashboard = () => {
 
   const totalTuls = tuls.length;
   const completedCount = getCompletedCount();
-  const inProgressCount = getInProgressCount();
   const progressPercentage = getProgressPercentage();
 
   // Calcular estadísticas avanzadas
@@ -73,7 +69,6 @@ export const Dashboard = () => {
 
   // Calcular tiempo estimado para próximo cinturón
   const remainingTuls = totalTuls - completedCount;
-  const estimatedWeeks = Math.ceil(remainingTuls / Math.max(weeklyAverage, 1));
 
   // Generar datos de actividad semanal simulados
   const weeklyActivity = [
@@ -259,7 +254,7 @@ export const Dashboard = () => {
       <div className="p-6 theme-bg-card theme-border rounded-lg">
         <h2 className="text-lg font-semibold mb-4 theme-text-primary">Próximos Objetivos</h2>
         <div className="space-y-3">
-          {nextGoals.map((goal, index) => (
+          {nextGoals.map((goal) => (
             <div key={index} className="flex items-center gap-3 p-3 theme-bg-secondary rounded-lg">
               <div className="w-2 h-2 bg-primary-500 rounded-full"></div>
               <p className="text-sm">{goal}</p>

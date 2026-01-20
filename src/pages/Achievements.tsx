@@ -6,7 +6,6 @@ export const Achievements = () => {
   const {
     unlockedAchievements,
     availableAchievements,
-    getAchievementProgress
   } = useProgress();
 
   const unlockedAchievementObjects = unlockedAchievements.map(ua =>

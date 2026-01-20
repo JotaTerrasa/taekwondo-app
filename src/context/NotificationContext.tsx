@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { Trophy, Bell, Target, BookOpen, Award } from 'lucide-react';
+import { Trophy, Bell, Target, Award } from 'lucide-react';
 
 export type NotificationType = 'achievement' | 'reminder' | 'milestone' | 'motivation' | 'info';
 
