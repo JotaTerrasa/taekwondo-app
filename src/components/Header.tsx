@@ -1,4 +1,5 @@
 import { Menu } from 'lucide-react';
+import { NotificationPanel } from './NotificationPanel';
 
 interface HeaderProps {
   onMenuToggle: () => void;
@@ -11,13 +12,17 @@ export const Header = ({ onMenuToggle }: HeaderProps) => {
         <img src="/imgs/logo.webp" width={80} alt="Logo de la escuela RAM" />
       </a>
 
-      <button
-        onClick={onMenuToggle}
-        className="transition-colors duration-200 rounded-lg hover:bg-gray-100"
-        aria-label="Abrir menú"
-      >
-        <Menu className="w-6 h-6" />
-      </button>
+      <div className="flex items-center gap-3">
+        <NotificationPanel />
+        <button
+          onClick={onMenuToggle}
+          className="p-2 transition-colors duration-200 rounded-lg theme-hover"
+          style={{ color: 'var(--text-primary)' }}
+          aria-label="Abrir menú"
+        >
+          <Menu className="w-6 h-6" />
+        </button>
+      </div>
     </header>
   );
 };

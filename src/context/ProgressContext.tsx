@@ -44,7 +44,8 @@ type ProgressProviderProps = {
   children: ReactNode;
 };
 
-export const ProgressProvider = ({ children }: ProgressProviderProps) => {
+// Componente interno que usa ambos contextos
+const ProgressProviderInner = ({ children }: ProgressProviderProps) => {
   const [currentBelt, setCurrentBeltState] = useState<string>(() => {
     const saved = localStorage.getItem('currentBelt');
     return saved || 'gup-9';
@@ -241,4 +242,33 @@ export const ProgressProvider = ({ children }: ProgressProviderProps) => {
       {children}
     </ProgressContext.Provider>
   );
+};
+
+// Nuevo provider que incluye notificaciones
+export const ProgressProvider = ({ children }: ProgressProviderProps) => {
+  return (
+    <ProgressProviderInner>
+      <ProgressNotificationHandler>
+        {children}
+      </ProgressNotificationHandler>
+    </ProgressProviderInner>
+  );
+};
+
+// Componente que maneja las notificaciones de progreso
+const ProgressNotificationHandler = ({ children }: { children: ReactNode }) => {
+  const { unlockedAchievements, checkNewAchievements } = useProgress();
+  const { addNotification } = useNotifications();
+
+  useEffect(() => {
+    const newAchievements = checkNewAchievements();
+    newAchievements.forEach(achievement => {
+      const achievementData = achievements.find(a => a.id === achievement.achievementId);
+      if (achievementData) {
+        addNotification(createAchievementNotification(achievementData.title));
+      }
+    });
+  }, [unlockedAchievements, checkNewAchievements, addNotification]);
+
+  return <>{children}</>;
 };

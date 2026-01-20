@@ -1,10 +1,14 @@
 import { useProgress } from '../context/ProgressContext';
+import { useNotifications, createMotivationNotification, createReminderNotification } from '../context/NotificationContext';
 import { tuls } from '../consts/tuls';
 import { Trophy, Target, TrendingUp, Calendar, Award } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { achievements } from '../consts/achievements';
+import { useEffect } from 'react';
 
 export const Dashboard = () => {
+  const navigate = useNavigate();
+  const { addNotification } = useNotifications();
   const {
     getProgressPercentage,
     getCompletedCount,
@@ -16,6 +20,40 @@ export const Dashboard = () => {
     completedExams,
     studiedTheorySessions
   } = useProgress();
+
+  // Notificaciones de bienvenida y motivación
+  useEffect(() => {
+    const hasSeenWelcome = localStorage.getItem('hasSeenWelcome');
+    if (!hasSeenWelcome) {
+      setTimeout(() => {
+        addNotification(createMotivationNotification(
+          '¡Bienvenido de vuelta! Cada día de práctica te acerca más a tu próximo cinturón.'
+        ));
+        localStorage.setItem('hasSeenWelcome', 'true');
+      }, 2000);
+    }
+
+    // Recordatorios útiles
+    if (currentStreak === 0 && completedCount > 0) {
+      setTimeout(() => {
+        addNotification(createReminderNotification(
+          '¿Hace tiempo que no practicas? ¡Vuelve a tu rutina de Taekwondo!',
+          'Ir a Tules',
+          () => navigate('/tules')
+        ));
+      }, 5000);
+    }
+
+    if (completedCount >= 5 && unlockedAchievements.length === 0) {
+      setTimeout(() => {
+        addNotification(createReminderNotification(
+          '¡Has completado varios tules! Revisa tus logros desbloqueados.',
+          'Ver Logros',
+          () => navigate('/achievements')
+        ));
+      }, 3000);
+    }
+  }, [addNotification, currentStreak, completedCount, unlockedAchievements.length, navigate]);
 
   const totalTuls = tuls.length;
   const completedCount = getCompletedCount();

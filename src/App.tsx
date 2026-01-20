@@ -13,6 +13,7 @@ import { ExamDetail } from './pages/ExamDetail';
 import { Dashboard } from './pages/Dashboard';
 import { Achievements } from './pages/Achievements';
 import { ProgressProvider } from './context/ProgressContext';
+import { NotificationProvider } from './context/NotificationContext';
 
 function App() {
   const [isLogged, setIsLogged] = useState(() => {
