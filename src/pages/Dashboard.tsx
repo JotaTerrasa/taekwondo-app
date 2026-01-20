@@ -1,84 +1,25 @@
 import { useProgress } from '../context/ProgressContext';
-import { useNotifications, createMotivationNotification, createReminderNotification } from '../context/NotificationContext';
 import { tuls } from '../consts/tuls';
-import { Trophy, Target, TrendingUp, Award, BarChart3, Flame, Star, Activity, Zap } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Trophy, Target, TrendingUp, Award } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { achievements } from '../consts/achievements';
-import { useEffect } from 'react';
 
 export const Dashboard = () => {
-  const navigate = useNavigate();
-  const { addNotification } = useNotifications();
   const {
     getProgressPercentage,
     getCompletedCount,
+    getInProgressCount,
     currentBelt,
     unlockedAchievements,
-    currentStreak,
-    totalPoints,
-    currentLevel,
-    pointsToNextLevel,
-    getLevelProgress
+    currentStreak
   } = useProgress();
-
-  // Notificaciones de bienvenida y motivación
-  useEffect(() => {
-    const hasSeenWelcome = localStorage.getItem('hasSeenWelcome');
-    if (!hasSeenWelcome) {
-      setTimeout(() => {
-        addNotification(createMotivationNotification(
-          '¡Bienvenido de vuelta! Cada día de práctica te acerca más a tu próximo cinturón.'
-        ));
-        localStorage.setItem('hasSeenWelcome', 'true');
-      }, 2000);
-    }
-
-    // Recordatorios útiles
-    if (currentStreak === 0 && completedCount > 0) {
-      setTimeout(() => {
-        addNotification(createReminderNotification(
-          '¿Hace tiempo que no practicas? ¡Vuelve a tu rutina de Taekwondo!',
-          'Ir a Tules',
-          () => navigate('/tules')
-        ));
-      }, 5000);
-    }
-
-    if (completedCount >= 5 && unlockedAchievements.length === 0) {
-      setTimeout(() => {
-        addNotification(createReminderNotification(
-          '¡Has completado varios tules! Revisa tus logros desbloqueados.',
-          'Ver Logros',
-          () => navigate('/achievements')
-        ));
-      }, 3000);
-    }
-  }, [addNotification, currentStreak, completedCount, unlockedAchievements.length, navigate]);
 
   const totalTuls = tuls.length;
   const completedCount = getCompletedCount();
+  const inProgressCount = getInProgressCount();
   const progressPercentage = getProgressPercentage();
 
-  // Calcular estadísticas avanzadas
-  const daysPracticing = Math.floor((Date.now() - new Date('2024-01-01').getTime()) / (1000 * 60 * 60 * 24));
-  const streakDays = currentStreak;
-
-  // Calcular promedio de práctica semanal
-  const weeklyAverage = Math.round((completedCount / Math.max(daysPracticing / 7, 1)) * 10) / 10;
-
-  // Calcular tiempo estimado para próximo cinturón
-  const remainingTuls = totalTuls - completedCount;
-
-  // Generar datos de actividad semanal simulados
-  const weeklyActivity = [
-    { day: 'Lun', count: Math.floor(Math.random() * 3) + (streakDays > 0 ? 1 : 0) },
-    { day: 'Mar', count: Math.floor(Math.random() * 3) + (streakDays > 1 ? 1 : 0) },
-    { day: 'Mié', count: Math.floor(Math.random() * 3) + (streakDays > 2 ? 1 : 0) },
-    { day: 'Jue', count: Math.floor(Math.random() * 3) + (streakDays > 3 ? 1 : 0) },
-    { day: 'Vie', count: Math.floor(Math.random() * 3) + (streakDays > 4 ? 1 : 0) },
-    { day: 'Sáb', count: Math.floor(Math.random() * 4) + (streakDays > 5 ? 2 : 0) },
-    { day: 'Dom', count: Math.floor(Math.random() * 3) + (streakDays > 6 ? 1 : 0) }
-  ];
+  // Estadísticas calculadas
 
   // Logros recientes (últimos 3 desbloqueados)
   const recentAchievements = unlockedAchievements
@@ -91,91 +32,46 @@ export const Dashboard = () => {
     {
       title: 'Progreso Total',
       value: `${progressPercentage}%`,
-      subtitle: `${remainingTuls} tuls restantes`,
-      icon: <Target className="w-6 h-6" style={{ color: 'var(--info-color)' }} />,
-      bgColor: 'theme-bg-secondary',
-      trend: progressPercentage > 50 ? 'up' : 'neutral'
+      icon: <Target className="w-6 h-6" />,
+      color: 'text-blue-500',
+      bgColor: 'bg-blue-50'
     },
     {
-      title: 'Racha Actual',
-      value: `${streakDays} días`,
-      subtitle: `Récord: ${Math.max(streakDays, 15)} días`,
-      icon: <Flame className="w-6 h-6" style={{ color: 'var(--warning-color)' }} />,
-      bgColor: 'theme-bg-secondary',
-      trend: streakDays > 0 ? 'up' : 'down'
+      title: 'Tuls Completados',
+      value: `${completedCount}/${totalTuls}`,
+      icon: <Trophy className="w-6 h-6" />,
+      color: 'text-green-500',
+      bgColor: 'bg-green-50'
     },
     {
-      title: 'Promedio Semanal',
-      value: `${weeklyAverage} tuls`,
-      subtitle: `Este mes: ${Math.round(weeklyAverage * 4.3)} tuls`,
-      icon: <BarChart3 className="w-6 h-6" style={{ color: 'var(--success-color)' }} />,
-      bgColor: 'theme-bg-secondary',
-      trend: weeklyAverage > 2 ? 'up' : 'neutral'
+      title: 'En Progreso',
+      value: inProgressCount.toString(),
+      icon: <TrendingUp className="w-6 h-6" />,
+      color: 'text-orange-500',
+      bgColor: 'bg-orange-50'
     },
     {
-      title: 'Nivel',
-      value: `${currentLevel}`,
-      subtitle: `${pointsToNextLevel} puntos para nivel ${currentLevel + 1}`,
-      icon: <Zap className="w-6 h-6" style={{ color: 'var(--accent-primary)' }} />,
-      bgColor: 'theme-bg-secondary',
-      trend: 'up'
+      title: 'Logros',
+      value: `${unlockedAchievements.length}`,
+      icon: <Award className="w-6 h-6" />,
+      color: 'text-yellow-500',
+      bgColor: 'bg-yellow-50'
     }
   ];
 
   // Próximos objetivos
   const nextGoals = [
-    `Completar ${Math.min(remainingTuls, 3)} tuls más para progreso`,
+    'Completar 3 tuls más para subir de cinturón',
     'Estudiar vocabulario de técnicas avanzadas',
-    'Practicar exámenes de cinturón negro',
-    `Mantener racha de ${streakDays + 1} días esta semana`
+    'Practicar exámenes de cinturón negro'
   ];
-
-  // Componente para gráfico de barras semanal
-  const WeeklyActivityChart = () => {
-    const maxCount = Math.max(...weeklyActivity.map(d => d.count));
-
-    return (
-      <div className="p-6 theme-bg-card theme-border rounded-lg">
-        <div className="flex items-center gap-2 mb-4">
-          <Activity className="w-5 h-5 theme-text-primary" />
-          <h2 className="text-lg font-semibold theme-text-primary">Actividad Semanal</h2>
-        </div>
-
-        <div className="flex items-end justify-between gap-2 h-32">
-          {weeklyActivity.map((day) => (
-            <div key={day.day} className="flex flex-col items-center flex-1">
-              <div className="flex flex-col items-center justify-end flex-1 w-full max-w-8">
-                <div
-                  className="w-full theme-bg-secondary rounded-t transition-all duration-500 hover:theme-bg-primary"
-                  style={{
-                    height: `${(day.count / Math.max(maxCount, 1)) * 100}%`,
-                    minHeight: day.count > 0 ? '8px' : '0px'
-                  }}
-                />
-              </div>
-              <span className="text-xs theme-text-secondary mt-2">{day.day}</span>
-              <span className="text-xs font-medium theme-text-primary">{day.count}</span>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-4 text-center">
-          <p className="text-sm theme-text-secondary">
-            Total esta semana: <span className="font-medium theme-text-primary">
-              {weeklyActivity.reduce((sum, day) => sum + day.count, 0)} tuls
-            </span>
-          </p>
-        </div>
-      </div>
-    );
-  };
 
   return (
     <section className="flex flex-col gap-6 pt-4">
       {/* Header */}
       <div className="flex flex-col gap-2">
-        <h1 className="text-2xl font-bold">Dashboard</h1>
-        <p className="text-gray-600">
+        <h1 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>Dashboard</h1>
+        <p style={{ color: 'var(--text-secondary)' }}>
           Tu progreso en Taekwondo - Cinturón actual: <span className="font-semibold text-primary-500">{currentBelt.toUpperCase()}</span>
         </p>
       </div>
@@ -183,19 +79,13 @@ export const Dashboard = () => {
       {/* Estadísticas principales */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat, index) => (
-          <div key={index} className={`p-4 rounded-lg border transition-all hover:shadow-md ${stat.bgColor}`} style={{ borderColor: 'var(--border-color)' }}>
-            <div className="flex items-start justify-between">
-              <div className="flex-1">
-                <p className="text-sm theme-text-secondary mb-1">{stat.title}</p>
-                <p className="text-2xl font-bold theme-text-primary mb-1">{stat.value}</p>
-                <p className="text-xs theme-text-muted">{stat.subtitle}</p>
-                {stat.trend && (
-                  <div className="flex items-center mt-1">
-                    <TrendingUp className={`w-3 h-3 ${stat.trend === 'up' ? 'text-green-500' : stat.trend === 'down' ? 'text-red-500' : 'theme-text-muted'}`} style={{ color: stat.trend === 'up' ? 'var(--success-color)' : stat.trend === 'down' ? 'var(--error-color)' : 'var(--text-muted)' }} />
-                  </div>
-                )}
+          <div key={index} className="p-4 rounded-lg border transition-colors" style={{ borderColor: 'var(--border-color)', backgroundColor: 'var(--card-bg)' }}>
+              <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>{stat.title}</p>
+                <p className="text-2xl font-bold" style={{ color: stat.color.includes('green') ? 'var(--success-color)' : stat.color.includes('blue') ? 'var(--info-color)' : stat.color.includes('orange') ? 'var(--warning-color)' : stat.color.includes('yellow') ? 'var(--warning-color)' : 'var(--text-primary)' }}>{stat.value}</p>
               </div>
-              <div className="ml-3">
+              <div style={{ color: stat.color.includes('green') ? 'var(--success-color)' : stat.color.includes('blue') ? 'var(--info-color)' : stat.color.includes('orange') ? 'var(--warning-color)' : stat.color.includes('yellow') ? 'var(--warning-color)' : 'var(--text-primary)' }}>
                 {stat.icon}
               </div>
             </div>
@@ -204,97 +94,65 @@ export const Dashboard = () => {
       </div>
 
       {/* Barra de progreso general */}
-      <div className="p-6 theme-bg-card theme-border rounded-lg">
-        <h2 className="text-lg font-semibold mb-4 theme-text-primary">Progreso General</h2>
-        <div className="w-full theme-bg-tertiary rounded-full h-3 mb-2">
+      <div className="p-6 border rounded-lg transition-colors" style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--border-color)' }}>
+        <h2 className="text-lg font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>Progreso General</h2>
+        <div className="w-full rounded-full h-3 mb-2" style={{ backgroundColor: 'var(--bg-tertiary)' }}>
           <div
-            className="theme-gradient-primary h-3 rounded-full transition-all duration-500"
+            className="bg-primary-500 h-3 rounded-full transition-all duration-500"
             style={{ width: `${progressPercentage}%` }}
           ></div>
         </div>
-        <p className="text-sm theme-text-secondary text-center">
+        <p className="text-sm text-center" style={{ color: 'var(--text-secondary)' }}>
           {completedCount} de {totalTuls} tuls completados
         </p>
       </div>
 
-      {/* Gráfico de actividad semanal */}
-      <WeeklyActivityChart />
-
-      {/* Barra de progreso de nivel */}
-      <div className="p-6 theme-bg-card theme-border rounded-lg">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold theme-text-primary">Progreso de Nivel</h2>
-          <div className="flex items-center gap-2">
-            <Star className="w-5 h-5" style={{ color: 'var(--warning-color)' }} />
-            <span className="font-bold text-lg theme-text-primary">
-              Nivel {currentLevel}
-            </span>
-          </div>
-        </div>
-
-        <div className="w-full theme-bg-tertiary rounded-full h-3 mb-2">
-          <div
-            className="theme-gradient-primary h-3 rounded-full transition-all duration-500"
-            style={{ width: `${getLevelProgress()}%` }}
-          ></div>
-        </div>
-
-        <div className="flex justify-between text-sm theme-text-secondary">
-          <span>{totalPoints} puntos</span>
-          <span>{currentLevel * 100} puntos</span>
-        </div>
-
-        <p className="text-sm theme-text-secondary mt-2 text-center">
-          {pointsToNextLevel} puntos más para alcanzar el nivel {currentLevel + 1}
-        </p>
-      </div>
-
       {/* Próximos objetivos */}
-      <div className="p-6 theme-bg-card theme-border rounded-lg">
-        <h2 className="text-lg font-semibold mb-4 theme-text-primary">Próximos Objetivos</h2>
+      <div className="p-6 border rounded-lg transition-colors" style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--border-color)' }}>
+        <h2 className="text-lg font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>Próximos Objetivos</h2>
         <div className="space-y-3">
-          {nextGoals.map((goal) => (
-            <div key={index} className="flex items-center gap-3 p-3 theme-bg-secondary rounded-lg">
+          {nextGoals.map((goal, index) => (
+            <div key={index} className="flex items-center gap-3 p-3 rounded-lg transition-colors" style={{ backgroundColor: 'var(--bg-secondary)' }}>
               <div className="w-2 h-2 bg-primary-500 rounded-full"></div>
-              <p className="text-sm">{goal}</p>
+              <p className="text-sm" style={{ color: 'var(--text-primary)' }}>{goal}</p>
             </div>
           ))}
         </div>
       </div>
 
       {/* Actividad reciente */}
-      <div className="p-6 theme-bg-card theme-border rounded-lg">
-        <h2 className="text-lg font-semibold mb-4 theme-text-primary">Actividad Reciente</h2>
+      <div className="p-6 border rounded-lg transition-colors" style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--border-color)' }}>
+        <h2 className="text-lg font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>Actividad Reciente</h2>
         <div className="space-y-3">
-          <div className="flex items-center justify-between p-3 theme-bg-secondary rounded-lg">
+          <div className="flex items-center justify-between p-3 rounded-lg transition-colors" style={{ backgroundColor: 'var(--bg-secondary)' }}>
             <div className="flex items-center gap-3">
               <div className="w-2 h-2 rounded-full" style={{ backgroundColor: 'var(--success-color)' }}></div>
-              <span className="text-sm theme-text-primary">Completaste el Tul #1</span>
+              <span className="text-sm" style={{ color: 'var(--text-primary)' }}>Completaste el Tul #1</span>
             </div>
-            <span className="text-xs theme-text-muted">Hace 2 días</span>
+            <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Hace 2 días</span>
           </div>
-          <div className="flex items-center justify-between p-3 theme-bg-secondary rounded-lg">
+          <div className="flex items-center justify-between p-3 rounded-lg transition-colors" style={{ backgroundColor: 'var(--bg-secondary)' }}>
             <div className="flex items-center gap-3">
               <div className="w-2 h-2 rounded-full" style={{ backgroundColor: 'var(--info-color)' }}></div>
-              <span className="text-sm theme-text-primary">Estudiaste vocabulario coreano</span>
+              <span className="text-sm" style={{ color: 'var(--text-primary)' }}>Estudiaste vocabulario coreano</span>
             </div>
-            <span className="text-xs theme-text-muted">Hace 5 días</span>
+            <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Hace 5 días</span>
           </div>
-          <div className="flex items-center justify-between p-3 theme-bg-secondary rounded-lg">
+          <div className="flex items-center justify-between p-3 rounded-lg transition-colors" style={{ backgroundColor: 'var(--bg-secondary)' }}>
             <div className="flex items-center gap-3">
               <div className="w-2 h-2 rounded-full" style={{ backgroundColor: 'var(--warning-color)' }}></div>
-              <span className="text-sm theme-text-primary">Iniciaste el Tul #3</span>
+              <span className="text-sm" style={{ color: 'var(--text-primary)' }}>Iniciaste el Tul #3</span>
             </div>
-            <span className="text-xs theme-text-muted">Hace 1 semana</span>
+            <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Hace 1 semana</span>
           </div>
         </div>
       </div>
 
       {/* Logros recientes */}
-      <div className="p-6 bg-white border border-gray-200 rounded-lg">
+      <div className="p-6 border rounded-lg transition-colors" style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--border-color)' }}>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold flex items-center gap-2">
-            <Award className="w-5 h-5 text-yellow-500" />
+          <h2 className="text-lg font-semibold flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+            <Award className="w-5 h-5" style={{ color: 'var(--warning-color)' }} />
             Logros Recientes
           </h2>
           <Link
@@ -308,21 +166,21 @@ export const Dashboard = () => {
         {recentAchievements.length > 0 ? (
           <div className="space-y-3">
             {recentAchievements.map((achievement) => (
-              <div key={achievement.id} className="flex items-center gap-3 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+              <div key={achievement.id} className="flex items-center gap-3 p-3 border rounded-lg transition-colors" style={{ backgroundColor: 'var(--bg-secondary)', borderColor: 'var(--border-color)' }}>
                 <span className="text-2xl">{achievement.icon}</span>
                 <div className="flex-1">
-                  <h4 className="font-semibold text-sm">{achievement.title}</h4>
-                  <p className="text-xs text-gray-600">{achievement.description}</p>
+                  <h4 className="font-semibold text-sm" style={{ color: 'var(--text-primary)' }}>{achievement.title}</h4>
+                  <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>{achievement.description}</p>
                 </div>
-                <Trophy className="w-4 h-4 text-yellow-500" />
+                <Trophy className="w-4 h-4" style={{ color: 'var(--warning-color)' }} />
               </div>
             ))}
           </div>
         ) : (
           <div className="text-center py-8">
-            <Award className="w-12 h-12 text-gray-300 mx-auto mb-2" />
-            <p className="text-sm text-gray-500">Aún no has desbloqueado logros</p>
-            <p className="text-xs text-gray-400 mt-1">¡Sigue practicando para conseguirlos!</p>
+            <Award className="w-12 h-12 mx-auto mb-2" style={{ color: 'var(--text-muted)' }} />
+            <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>Aún no has desbloqueado logros</p>
+            <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>¡Sigue practicando para conseguirlos!</p>
           </div>
         )}
       </div>

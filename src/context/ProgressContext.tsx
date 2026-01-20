@@ -28,12 +28,6 @@ type ProgressContextType = {
   longestStreak: number;
   totalPracticeTime: number;
   setTotalPracticeTime: (time: number) => void;
-  // Gamification system
-  totalPoints: number;
-  currentLevel: number;
-  pointsToNextLevel: number;
-  addPoints: (points: number, reason: string) => void;
-  getLevelProgress: () => number;
 };
 
 const ProgressContext = createContext<ProgressContextType | null>(null);
@@ -50,80 +44,16 @@ type ProgressProviderProps = {
   children: ReactNode;
 };
 
-// Sistema de puntos y niveles
-const POINTS_PER_TUL_COMPLETION = 50;
-const POINTS_PER_ACHIEVEMENT = 25;
-
-const getLevelFromPoints = (points: number): number => {
-  return Math.floor(points / 100) + 1; // Nivel 1 cada 100 puntos
-};
-
-const getPointsForNextLevel = (currentLevel: number): number => {
-  return currentLevel * 100; // 100 puntos por nivel
-};
-
-// Componente interno que usa ambos contextos
-const ProgressProviderInner = ({ children }: ProgressProviderProps) => {
+export const ProgressProvider = ({ children }: ProgressProviderProps) => {
   const [currentBelt, setCurrentBeltState] = useState<string>(() => {
     const saved = localStorage.getItem('currentBelt');
     return saved || 'gup-9';
   });
 
-  // Estado de gamificación
-  const [totalPoints, setTotalPoints] = useState<number>(() => {
-    const saved = localStorage.getItem('totalPoints');
-    return saved ? parseInt(saved, 10) : 0;
-  });
-
-  // Calcular nivel actual y puntos para siguiente nivel
-  const currentLevel = getLevelFromPoints(totalPoints);
-  const pointsToNextLevel = getPointsForNextLevel(currentLevel) - totalPoints;
-
-  // Función para agregar puntos
-  const addPoints = (points: number, _reason: string) => {
-    setTotalPoints(prev => {
-      const newTotal = prev + points;
-      localStorage.setItem('totalPoints', newTotal.toString());
-
-      return newTotal;
-    });
-  };
-
-  // Calcular progreso hacia el siguiente nivel
-  const getLevelProgress = () => {
-    const currentLevelPoints = (currentLevel - 1) * 100;
-    const progressPoints = totalPoints - currentLevelPoints;
-    return Math.min((progressPoints / 100) * 100, 100);
-  };
-
   const [tulProgress, setTulProgress] = useState<TulProgress>(() => {
     const saved = localStorage.getItem('tulProgress');
     return saved ? JSON.parse(saved) : {};
   });
-
-  // Auto-otorgar puntos por actividades completadas
-  useEffect(() => {
-    const completedTuls = getCompletedCount();
-    const savedCompletedTuls = localStorage.getItem('lastPointsCalculation_completedTuls');
-    const lastCompletedTuls = savedCompletedTuls ? parseInt(savedCompletedTuls, 10) : 0;
-
-    if (completedTuls > lastCompletedTuls) {
-      const newTuls = completedTuls - lastCompletedTuls;
-      addPoints(newTuls * POINTS_PER_TUL_COMPLETION, `Completar ${newTuls} tul(s)`);
-      localStorage.setItem('lastPointsCalculation_completedTuls', completedTuls.toString());
-    }
-  }, [tulProgress]);
-
-  useEffect(() => {
-    const savedAchievements = localStorage.getItem('lastPointsCalculation_achievements');
-    const lastAchievementCount = savedAchievements ? parseInt(savedAchievements, 10) : 0;
-
-    if (unlockedAchievements.length > lastAchievementCount) {
-      const newAchievements = unlockedAchievements.length - lastAchievementCount;
-      addPoints(newAchievements * POINTS_PER_ACHIEVEMENT, `Desbloquear ${newAchievements} logro(s)`);
-      localStorage.setItem('lastPointsCalculation_achievements', unlockedAchievements.length.toString());
-    }
-  }, [unlockedAchievements]);
 
   // Achievement system state
   const [unlockedAchievements, setUnlockedAchievements] = useState<UserAchievement[]>(() => {
@@ -306,61 +236,9 @@ const ProgressProviderInner = ({ children }: ProgressProviderProps) => {
         longestStreak,
         totalPracticeTime,
         setTotalPracticeTime,
-        // Gamification system
-        totalPoints,
-        currentLevel,
-        pointsToNextLevel,
-        addPoints,
-        getLevelProgress,
       }}
     >
       {children}
     </ProgressContext.Provider>
   );
-};
-
-// Nuevo provider que incluye notificaciones
-export const ProgressProvider = ({ children }: ProgressProviderProps) => {
-  return (
-    <ProgressProviderInner>
-      <ProgressNotificationHandler>
-        {children}
-      </ProgressNotificationHandler>
-    </ProgressProviderInner>
-  );
-};
-
-// Componente que maneja las notificaciones de progreso
-const ProgressNotificationHandler = ({ children }: { children: ReactNode }) => {
-  const { unlockedAchievements, checkNewAchievements, totalPoints, currentLevel } = useProgress();
-  const { addNotification } = useNotifications();
-
-  // Estado para trackear el último nivel notificado
-  const [lastNotifiedLevel, setLastNotifiedLevel] = useState(currentLevel);
-
-  useEffect(() => {
-    const newAchievements = checkNewAchievements();
-    newAchievements.forEach(achievement => {
-      const achievementData = achievements.find(a => a.id === achievement.achievementId);
-      if (achievementData) {
-        addNotification(createAchievementNotification(achievementData.title));
-      }
-    });
-  }, [unlockedAchievements, checkNewAchievements, addNotification]);
-
-  // Notificar subida de nivel
-  useEffect(() => {
-    const newLevel = getLevelFromPoints(totalPoints);
-    if (newLevel > lastNotifiedLevel && newLevel > 1) {
-      addNotification({
-        type: 'milestone',
-        title: '🎉 ¡Subiste de Nivel!',
-        message: `Felicidades! Alcanzaste el nivel ${newLevel}. ¡Sigue practicando!`,
-        icon: <Star className="w-5 h-5" style={{ color: 'var(--warning-color)' }} />
-      });
-      setLastNotifiedLevel(newLevel);
-    }
-  }, [totalPoints, lastNotifiedLevel, addNotification]);
-
-  return <>{children}</>;
 };

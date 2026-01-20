@@ -5,7 +5,7 @@ import { Trophy, Lock, Star } from 'lucide-react';
 export const Achievements = () => {
   const {
     unlockedAchievements,
-    availableAchievements,
+    availableAchievements
   } = useProgress();
 
   const unlockedAchievementObjects = unlockedAchievements.map(ua =>
@@ -24,7 +24,7 @@ export const Achievements = () => {
     <div
       className={`p-4 rounded-lg border transition-all ${
         isUnlocked
-          ? 'theme-border theme-bg-secondary shadow-md'
+          ? 'border-green-200 bg-green-50 shadow-md'
           : 'theme-border theme-bg-card opacity-60'
       }`}
     >
@@ -39,7 +39,7 @@ export const Achievements = () => {
               {achievement.title}
             </h3>
             {isUnlocked && (
-              <Trophy className="w-4 h-4" style={{ color: 'var(--warning-color)' }} />
+              <Trophy className="w-4 h-4 text-yellow-500" />
             )}
           </div>
 
@@ -60,14 +60,14 @@ export const Achievements = () => {
           </div>
 
           {achievement.reward && isUnlocked && (
-            <div className="mt-2 p-2 theme-bg-secondary theme-border rounded">
+            <div className="mt-2 p-2 bg-yellow-50 border border-yellow-200 rounded">
               <div className="flex items-center gap-1">
-                <Star className="w-3 h-3" style={{ color: 'var(--warning-color)' }} />
-                <span className="text-xs font-medium theme-text-primary">
+                <Star className="w-3 h-3 text-yellow-500" />
+                <span className="text-xs font-medium text-yellow-700">
                   {achievement.reward.title}
                 </span>
               </div>
-              <p className="text-xs theme-text-secondary mt-1">
+              <p className="text-xs text-yellow-600 mt-1">
                 {achievement.reward.description}
               </p>
             </div>
@@ -81,19 +81,19 @@ export const Achievements = () => {
     <section className="flex flex-col gap-6 pt-4">
       {/* Header */}
       <div className="flex flex-col gap-2">
-        <h1 className="text-2xl font-bold theme-text-primary">Logros</h1>
+        <h1 className="text-2xl font-bold">Logros</h1>
         <p className="theme-text-secondary">
           Tu colección de logros desbloqueados - {unlockedAchievements.length} de {achievements.length} completados
         </p>
       </div>
 
       {/* Progress Overview */}
-      <div className="p-6 theme-bg-secondary theme-border rounded-lg">
+      <div className="p-6 bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold theme-text-primary">Progreso General</h2>
+          <h2 className="text-lg font-semibold">Progreso General</h2>
           <div className="flex items-center gap-2">
-            <Trophy className="w-5 h-5" style={{ color: 'var(--warning-color)' }} />
-            <span className="font-bold text-lg theme-text-primary">
+            <Trophy className="w-5 h-5 text-yellow-500" />
+            <span className="font-bold text-lg">
               {unlockedAchievements.length}/{achievements.length}
             </span>
           </div>
@@ -101,7 +101,7 @@ export const Achievements = () => {
 
         <div className="w-full theme-bg-tertiary rounded-full h-3 mb-2">
           <div
-            className="theme-gradient-primary h-3 rounded-full transition-all duration-500"
+            className="bg-gradient-to-r from-blue-500 to-purple-500 h-3 rounded-full transition-all duration-500"
             style={{ width: `${(unlockedAchievements.length / achievements.length) * 100}%` }}
           ></div>
         </div>
@@ -114,8 +114,8 @@ export const Achievements = () => {
       {/* Unlocked Achievements */}
       {unlockedAchievementObjects.length > 0 && (
         <div className="flex flex-col gap-4">
-          <h2 className="text-xl font-semibold flex items-center gap-2 theme-text-primary">
-            <Trophy className="w-5 h-5" style={{ color: 'var(--warning-color)' }} />
+          <h2 className="text-xl font-semibold flex items-center gap-2">
+            <Trophy className="w-5 h-5 text-yellow-500" />
             Logros Desbloqueados ({unlockedAchievementObjects.length})
           </h2>
 
@@ -138,7 +138,7 @@ export const Achievements = () => {
       {/* Available Achievements */}
       {availableAchievements.length > 0 && (
         <div className="flex flex-col gap-4">
-          <h2 className="text-xl font-semibold flex items-center gap-2 theme-text-primary">
+          <h2 className="text-xl font-semibold flex items-center gap-2">
             <Lock className="w-5 h-5 theme-text-muted" />
             Logros Disponibles ({availableAchievements.length})
           </h2>
