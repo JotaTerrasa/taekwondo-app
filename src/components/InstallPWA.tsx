@@ -33,7 +33,7 @@ export const InstallPWA = () => {
 
   return (
     <div className="w-full max-w-sm fixed bottom-6 max-md:left-1/2 max-md:-translate-x-1/2 md:right-6 z-50 px-4">
-      <section className="rounded-lg bg-white p-6 shadow-xl">
+      <section className="rounded-lg theme-bg-card p-6 shadow-xl">
         <h2 className="text-lg font-semibold text-gray-900">Instala la app</h2>
         <p className="mt-2 text-sm text-gray-600">
           Añade Taekwondo App a tu dispositivo para un acceso más rápido.
@@ -41,14 +41,14 @@ export const InstallPWA = () => {
         <div className="mt-4 flex gap-3 flex-wrap">
           <button
             type="button"
-            className="flex-1 rounded-md bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-700 transition-colors whitespace-nowrap cursor-pointer"
+            className="flex-1 rounded-md px-3 py-2 text-sm font-medium text-white theme-btn transition-colors whitespace-nowrap cursor-pointer"
             onClick={handleInstall}
           >
             Instalar
           </button>
           <button
             type="button"
-            className="flex-1 rounded-md border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors whitespace-nowrap cursor-pointer"
+            className="flex-1 rounded-md theme-border border px-3 py-2 text-sm font-medium theme-text-primary theme-hover transition-colors whitespace-nowrap cursor-pointer"
             onClick={handleClose}
           >
             Más tarde

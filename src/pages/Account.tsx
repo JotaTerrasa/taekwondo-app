@@ -86,7 +86,7 @@ export const Account = () => {
               <User className="w-16 h-16" style={{ color: 'var(--text-muted)' }} />
             )}
           </button>
-          <div className="absolute bottom-0 right-0 flex items-center justify-center w-10 h-10 border-2 border-white rounded-full bg-primary-500">
+          <div className="absolute bottom-0 right-0 flex items-center justify-center w-10 h-10 border-2 border-white rounded-full" style={{ backgroundColor: 'var(--accent-primary)' }}>
             <Edit width={16} height={16} color="#ffffff" />
           </div>
           <input

@@ -122,11 +122,11 @@ export const BottomNav = ({ isHidden = false }: BottomNavProps) => {
                 className={`
                   flex flex-col items-center justify-center gap-1 w-full py-2
                   rounded-lg transition-colors duration-200
-                  hover:bg-gray-100 focus:outline-none focus-visible:ring-2
+                  theme-hover focus:outline-none focus-visible:ring-2
                   focus-visible:ring-primary-500 focus-visible:ring-offset-2
                 `}
                 style={{
-                  color: isActive ? '#800000' : 'var(--text-primary)',
+                  color: isActive ? 'var(--active-text)' : 'var(--text-primary)',
                   backgroundColor: 'transparent'
                 }}
                 aria-label={item.label}

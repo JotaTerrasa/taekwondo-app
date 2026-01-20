@@ -62,7 +62,7 @@ export const ExamDetail = () => {
 
       {/* Progreso del examen */}
       {requiredTuls.length > 0 && (
-        <div className="p-4 rounded-lg bg-gray-50">
+        <div className="p-4 rounded-lg theme-bg-secondary">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm font-medium text-gray-600">
               Progreso de tules
@@ -71,7 +71,7 @@ export const ExamDetail = () => {
               {completedTuls}/{requiredTuls.length}
             </span>
           </div>
-          <div className="w-full h-2 overflow-hidden bg-gray-200 rounded-full">
+          <div className="w-full h-2 overflow-hidden theme-bg-tertiary rounded-full">
             <div
               className="h-full transition-all duration-500 rounded-full bg-primary-500"
               style={{
@@ -97,7 +97,7 @@ export const ExamDetail = () => {
                 <Link
                   key={tul.id}
                   to={`/tul/${tul.id}`}
-                  className="flex items-center justify-between p-3 bg-white border border-gray-200 rounded-lg hover:border-primary-500 transition-colors"
+                  className="flex items-center justify-between p-3 theme-bg-card theme-border border rounded-lg hover:border-primary-500 transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     <div

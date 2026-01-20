@@ -44,6 +44,29 @@ body {
   --card-bg: #ffffff;
   --input-bg: #ffffff;
   --hover-bg: #f5f5f5;
+
+  /* Colores de acento y estados */
+  --accent-primary: #800000;
+  --accent-hover: #6b0000;
+  --accent-light: rgba(128, 0, 0, 0.1);
+  --active-bg: rgba(128, 0, 0, 0.1);
+  --active-border: #800000;
+  --active-text: #800000;
+
+  /* Colores para inputs y formularios */
+  --input-text: #191919;
+  --input-border: #e5e7eb;
+  --input-border-active: #d1d5db;
+
+  /* Colores para gradientes */
+  --gradient-primary: linear-gradient(135deg, #800000 0%, #b91c1c 100%);
+  --gradient-secondary: linear-gradient(135deg, #f8f9fa 0%, #e5e7eb 100%);
+
+  /* Colores específicos para estados */
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --error-color: #ef4444;
+  --info-color: #3b82f6;
 }
 
 /* Tema oscuro - Mejorado con mejor contraste y colores más suaves */
@@ -59,6 +82,29 @@ body {
   --card-bg: #1e1e1e;
   --input-bg: #2d2d2d;
   --hover-bg: #2d2d2d;
+
+  /* Colores de acento y estados */
+  --accent-primary: #800000;
+  --accent-hover: #6b0000;
+  --accent-light: rgba(128, 0, 0, 0.2);
+  --active-bg: rgba(128, 0, 0, 0.2);
+  --active-border: #800000;
+  --active-text: #800000;
+
+  /* Colores para inputs y formularios */
+  --input-text: #e5e5e5;
+  --input-border: #404040;
+  --input-border-active: #606060;
+
+  /* Colores para gradientes */
+  --gradient-primary: linear-gradient(135deg, #800000 0%, #b91c1c 100%);
+  --gradient-secondary: linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%);
+
+  /* Colores específicos para estados */
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --error-color: #ef4444;
+  --info-color: #3b82f6;
 }
 
 /* Aplicar variables CSS al body */
@@ -120,3 +166,62 @@ body {
   font-display: swap;
   src: url("/fonts/Manrope-SemiBold.woff2") format("woff2");
 }
+
+/* Clases utilitarias para tema */
+.theme-bg-primary { background-color: var(--bg-primary); }
+.theme-bg-secondary { background-color: var(--bg-secondary); }
+.theme-bg-tertiary { background-color: var(--bg-tertiary); }
+.theme-bg-card { background-color: var(--card-bg); }
+.theme-bg-input { background-color: var(--input-bg); }
+
+.theme-text-primary { color: var(--text-primary); }
+.theme-text-secondary { color: var(--text-secondary); }
+.theme-text-muted { color: var(--text-muted); }
+.theme-text-accent { color: var(--active-text); }
+
+.theme-border { border-color: var(--border-color); }
+.theme-border-input { border-color: var(--input-border); }
+
+.theme-hover:hover { background-color: var(--hover-bg) !important; }
+.theme-active { background-color: var(--active-bg); color: var(--active-text); }
+
+/* Botón temático */
+.theme-btn {
+  background-color: var(--accent-primary);
+  color: white;
+  border: none;
+  transition: background-color 0.2s ease;
+}
+
+.theme-btn:hover:not(:disabled) {
+  background-color: var(--accent-hover);
+}
+
+.theme-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Input temático */
+.theme-input {
+  background-color: var(--input-bg);
+  color: var(--input-text);
+  border: 1px solid var(--input-border);
+  transition: border-color 0.2s ease;
+}
+
+.theme-input:focus {
+  outline: none;
+  border-color: var(--input-border-active);
+}
+
+.theme-input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Gradientes temáticos */
+.theme-gradient-primary { background: var(--gradient-primary); }
+.theme-gradient-secondary { background: var(--gradient-secondary); }
+
+/* Clases específicas para elementos que necesitan colores fijos en gradientes */
+.gradient-text { color: white !important; }

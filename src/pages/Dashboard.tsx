@@ -1,6 +1,6 @@
 import { useProgress } from '../context/ProgressContext';
 import { tuls } from '../consts/tuls';
-import { Trophy, Target, TrendingUp, Calendar, Award } from 'lucide-react';
+import { Trophy, Target, TrendingUp, Award } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { achievements } from '../consts/achievements';
 
@@ -10,11 +10,8 @@ export const Dashboard = () => {
     getCompletedCount,
     getInProgressCount,
     currentBelt,
-    tulProgress,
     unlockedAchievements,
-    currentStreak,
-    completedExams,
-    studiedTheorySessions
+    currentStreak
   } = useProgress();
 
   const totalTuls = tuls.length;
@@ -22,8 +19,7 @@ export const Dashboard = () => {
   const inProgressCount = getInProgressCount();
   const progressPercentage = getProgressPercentage();
 
-  // Calcular estadísticas adicionales
-  const daysPracticing = Math.floor((Date.now() - new Date('2024-01-01').getTime()) / (1000 * 60 * 60 * 24));
+  // Calcular estadísticas adicionales (solo se usa streakDays por ahora)
   const streakDays = currentStreak;
 
   // Logros recientes (últimos 3 desbloqueados)
@@ -85,12 +81,12 @@ export const Dashboard = () => {
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat, index) => (
           <div key={index} className="p-4 rounded-lg border transition-colors" style={{ borderColor: 'var(--border-color)', backgroundColor: 'var(--card-bg)' }}>
-            <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>{stat.title}</p>
-                <p className={`text-2xl font-bold ${stat.color}`}>{stat.value}</p>
+                <p className="text-2xl font-bold" style={{ color: stat.color.includes('green') ? 'var(--success-color)' : stat.color.includes('blue') ? 'var(--info-color)' : stat.color.includes('orange') ? 'var(--warning-color)' : stat.color.includes('yellow') ? 'var(--warning-color)' : 'var(--text-primary)' }}>{stat.value}</p>
               </div>
-              <div className={stat.color}>
+              <div style={{ color: stat.color.includes('green') ? 'var(--success-color)' : stat.color.includes('blue') ? 'var(--info-color)' : stat.color.includes('orange') ? 'var(--warning-color)' : stat.color.includes('yellow') ? 'var(--warning-color)' : 'var(--text-primary)' }}>
                 {stat.icon}
               </div>
             </div>
@@ -131,21 +127,21 @@ export const Dashboard = () => {
         <div className="space-y-3">
           <div className="flex items-center justify-between p-3 rounded-lg transition-colors" style={{ backgroundColor: 'var(--bg-secondary)' }}>
             <div className="flex items-center gap-3">
-              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+              <div className="w-2 h-2 rounded-full" style={{ backgroundColor: 'var(--success-color)' }}></div>
               <span className="text-sm" style={{ color: 'var(--text-primary)' }}>Completaste el Tul #1</span>
             </div>
             <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Hace 2 días</span>
           </div>
           <div className="flex items-center justify-between p-3 rounded-lg transition-colors" style={{ backgroundColor: 'var(--bg-secondary)' }}>
             <div className="flex items-center gap-3">
-              <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+              <div className="w-2 h-2 rounded-full" style={{ backgroundColor: 'var(--info-color)' }}></div>
               <span className="text-sm" style={{ color: 'var(--text-primary)' }}>Estudiaste vocabulario coreano</span>
             </div>
             <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Hace 5 días</span>
           </div>
           <div className="flex items-center justify-between p-3 rounded-lg transition-colors" style={{ backgroundColor: 'var(--bg-secondary)' }}>
             <div className="flex items-center gap-3">
-              <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+              <div className="w-2 h-2 rounded-full" style={{ backgroundColor: 'var(--warning-color)' }}></div>
               <span className="text-sm" style={{ color: 'var(--text-primary)' }}>Iniciaste el Tul #3</span>
             </div>
             <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Hace 1 semana</span>
@@ -157,7 +153,7 @@ export const Dashboard = () => {
       <div className="p-6 border rounded-lg transition-colors" style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--border-color)' }}>
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
-            <Award className="w-5 h-5 text-yellow-500" />
+            <Award className="w-5 h-5" style={{ color: 'var(--warning-color)' }} />
             Logros Recientes
           </h2>
           <Link
@@ -177,7 +173,7 @@ export const Dashboard = () => {
                   <h4 className="font-semibold text-sm" style={{ color: 'var(--text-primary)' }}>{achievement.title}</h4>
                   <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>{achievement.description}</p>
                 </div>
-                <Trophy className="w-4 h-4 text-yellow-500" />
+                <Trophy className="w-4 h-4" style={{ color: 'var(--warning-color)' }} />
               </div>
             ))}
           </div>

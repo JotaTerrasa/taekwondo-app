@@ -6,9 +6,9 @@ import { useProgress, TulStatus } from '../context/ProgressContext';
 import { Check, Clock, Circle } from 'lucide-react';
 
 const statusOptions: { value: TulStatus; label: string; icon: typeof Check; activeClass: string }[] = [
-  { value: 'not_started', label: 'Sin empezar', icon: Circle, activeClass: 'bg-gray-500 text-white border-gray-500' },
-  { value: 'in_progress', label: 'En progreso', icon: Clock, activeClass: 'bg-amber-500 text-white border-amber-500' },
-  { value: 'completed', label: 'Completado', icon: Check, activeClass: 'bg-green-500 text-white border-green-500' },
+  { value: 'not_started', label: 'Sin empezar', icon: Circle, activeClass: 'theme-text-secondary text-white border-gray-500' },
+  { value: 'in_progress', label: 'En progreso', icon: Clock, activeClass: 'theme-text-secondary text-white border-amber-500' },
+  { value: 'completed', label: 'Completado', icon: Check, activeClass: 'theme-text-secondary text-white border-green-500' },
 ];
 
 export const TulManagement = () => {
@@ -52,7 +52,7 @@ export const TulManagement = () => {
               className={`flex items-center gap-1.5 px-3 py-2 text-sm font-medium border rounded-full transition-all ${
                 currentStatus === value
                   ? activeClass
-                  : 'bg-white text-gray-600 border-gray-300 hover:border-gray-400'
+                  : 'theme-bg-card theme-text-secondary theme-border hover:theme-border-input'
               }`}
             >
               <Icon className="w-4 h-4" />

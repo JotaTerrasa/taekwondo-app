@@ -24,25 +24,25 @@ export const Exams = () => {
   return (
     <section className="flex flex-col gap-4 pt-4">
       {/* Tarjeta de progreso */}
-      <div className="p-4 text-white rounded-xl bg-gradient-to-br from-primary-500 to-red-700">
+      <div className="p-4 text-white rounded-xl theme-gradient-primary">
         <div className="flex items-center gap-2 mb-3">
           <TrendingUp className="w-5 h-5" />
           <span className="font-medium">Tu progreso</span>
         </div>
         <div className="flex items-center gap-4">
           {currentExam && (
-            <img 
-              src={currentExam.img} 
-              alt={currentExam.range} 
-              className="w-16 p-1 bg-white rounded-lg"
+            <img
+              src={currentExam.img}
+              alt={currentExam.range}
+              className="w-16 p-1 theme-bg-card rounded-lg"
             />
           )}
           <div className="flex-1">
             <p className="text-sm opacity-90">Cinturón actual</p>
             <p className="font-semibold">{currentExam?.range || 'Sin seleccionar'}</p>
             <div className="flex items-center gap-2 mt-2">
-              <div className="flex-1 h-2 overflow-hidden rounded-full bg-white/30">
-                <div 
+              <div className="flex-1 h-2 overflow-hidden rounded-full" style={{ backgroundColor: 'rgba(255, 255, 255, 0.3)' }}>
+                <div
                   className="h-full transition-all duration-500 bg-white rounded-full"
                   style={{ width: `${getProgressPercentage()}%` }}
                 />
@@ -62,8 +62,8 @@ export const Exams = () => {
             onClick={() => setFilter('all')}
             className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
               filter === 'all'
-                ? 'bg-primary-500 text-white'
-                : 'bg-white text-gray-700 border border-gray-300 hover:border-primary-300'
+                ? 'theme-btn'
+                : 'theme-bg-card theme-text-primary theme-border border hover:theme-border-input'
             }`}
           >
             Todos ({exams.length})
@@ -72,8 +72,8 @@ export const Exams = () => {
             onClick={() => setFilter('gup')}
             className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
               filter === 'gup'
-                ? 'bg-primary-500 text-white'
-                : 'bg-white text-gray-700 border border-gray-300 hover:border-primary-300'
+                ? 'theme-btn'
+                : 'theme-bg-card theme-text-primary theme-border border hover:theme-border-input'
             }`}
           >
             GUP ({gupCount})
@@ -82,8 +82,8 @@ export const Exams = () => {
             onClick={() => setFilter('dan')}
             className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
               filter === 'dan'
-                ? 'bg-primary-500 text-white'
-                : 'bg-white text-gray-700 border border-gray-300 hover:border-primary-300'
+                ? 'theme-btn'
+                : 'theme-bg-card theme-text-primary theme-border border hover:theme-border-input'
             }`}
           >
             DAN ({danCount})
@@ -104,13 +104,13 @@ const ExamCard = ({ exam }: { exam: Exam }) => {
   return (
     <Link
       to={`/exam/${exam.id}`}
-      className="flex items-center justify-between px-4 py-6 bg-white rounded-full shadow-xs hover:shadow-md transition-shadow"
+      className="flex items-center justify-between px-4 py-6 theme-bg-card rounded-full shadow-xs hover:shadow-md transition-all duration-200 hover:theme-hover"
     >
       <div className="flex items-center gap-3">
         <img src={exam.img} alt={exam.range} width={80} />
-        <h2 className="font-semibold text-gray-800">{exam.range}</h2>
+        <h2 className="font-semibold theme-text-primary">{exam.range}</h2>
       </div>
-      <ChevronRight color="#191919" size={20} />
+      <ChevronRight className="theme-text-primary" size={20} />
     </Link>
   );
 };

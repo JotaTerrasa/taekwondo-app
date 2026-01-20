@@ -99,7 +99,7 @@ export const Quiz = ({ items, onBack }: QuizProps) => {
     const percentage = Math.round((score / questions.length) * 100);
     return (
       <section className="flex flex-col items-center gap-6 pt-4">
-        <div className="flex flex-col items-center gap-4 p-8 bg-white rounded-xl shadow-lg">
+        <div className="flex flex-col items-center gap-4 p-8 theme-bg-card rounded-xl shadow-lg">
           <div className="text-6xl font-bold text-primary-500">{percentage}%</div>
           <p className="text-xl font-semibold">
             {score} de {questions.length} correctas
@@ -107,14 +107,14 @@ export const Quiz = ({ items, onBack }: QuizProps) => {
           <div className="flex gap-4">
             <button
               onClick={handleRestart}
-              className="flex items-center gap-2 px-6 py-3 text-white rounded-lg bg-primary-500 hover:bg-phover-500"
+              className="flex items-center gap-2 px-6 py-3 text-white rounded-lg theme-btn"
             >
               <RotateCcw className="w-4 h-4" />
               Intentar de nuevo
             </button>
             <button
               onClick={onBack}
-              className="px-6 py-3 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300"
+              className="px-6 py-3 theme-text-primary theme-bg-tertiary rounded-lg hover:theme-hover"
             >
               Volver
             </button>
@@ -142,7 +142,7 @@ export const Quiz = ({ items, onBack }: QuizProps) => {
       </div>
 
       {/* Barra de progreso */}
-      <div className="w-full h-2 overflow-hidden bg-gray-200 rounded-full">
+      <div className="w-full h-2 overflow-hidden theme-bg-tertiary rounded-full">
         <div
           className="h-full transition-all duration-300 rounded-full bg-primary-500"
           style={{ width: `${((currentIndex + 1) / questions.length) * 100}%` }}
@@ -174,7 +174,7 @@ export const Quiz = ({ items, onBack }: QuizProps) => {
             } else if (selectedAnswer === option && !answered) {
               buttonClass += 'border-primary-500 bg-primary-50';
             } else {
-              buttonClass += 'border-gray-200 hover:border-primary-300 bg-white';
+              buttonClass += 'theme-border hover:border-primary-300 theme-bg-card';
             }
 
             return (
@@ -202,7 +202,7 @@ export const Quiz = ({ items, onBack }: QuizProps) => {
         {answered && (
           <button
             onClick={handleNext}
-            className="w-full px-6 py-3 mt-4 text-white rounded-lg bg-primary-500 hover:bg-phover-500"
+            className="w-full px-6 py-3 mt-4 text-white rounded-lg theme-btn"
           >
             {currentIndex < questions.length - 1 ? 'Siguiente' : 'Ver resultados'}
           </button>

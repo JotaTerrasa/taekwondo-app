@@ -38,12 +38,12 @@ export const Login = ({ onLoginSuccess }: LoginProps) => {
               signIn();
             }
           }}
-          className="flex h-fit w-[90%] flex-col items-center justify-center gap-4 bg-white border border-gray-300 px-4 py-6 rounded-md"
+          className="flex h-fit w-[90%] flex-col items-center justify-center gap-4 theme-bg-card theme-border px-4 py-6 rounded-md border"
         >
           <div className="flex flex-col items-center w-full gap-2">
             <img src="/imgs/logo.webp" width={80} alt="logo escuela" />
             <h1 className="text-3xl font-bold">Iniciar sesión</h1>
-            <p className="leading-5 text-center text-gray-500 text-md">
+            <p className="leading-5 text-center theme-text-secondary text-md">
               Inicia sesión en tu cuenta de Taekwondo de la escuela RAM
             </p>
           </div>
@@ -51,7 +51,7 @@ export const Login = ({ onLoginSuccess }: LoginProps) => {
             <p className="sr-only">Correo electrónico</p>
             <input
               type="email"
-              className="flex items-center w-full h-12 px-4 text-gray-900 border border-gray-300 rounded-md active:border-gray-400"
+              className="flex items-center w-full h-12 px-4 theme-input rounded-md"
               placeholder="Correo electrónico"
               onChange={(event) => {
                 setFormData({ ...formData, email: event.target.value });
@@ -64,7 +64,7 @@ export const Login = ({ onLoginSuccess }: LoginProps) => {
             <input
               type={showPassword ? 'text' : 'password'}
               placeholder="Contraseña"
-              className="flex items-center w-full h-12 px-4 pr-12 text-gray-900 border border-gray-300 rounded-md active:border-gray-400"
+              className="flex items-center w-full h-12 px-4 pr-12 theme-input rounded-md"
               onChange={(event) => {
                 setFormData({ ...formData, password: event.target.value });
               }}
@@ -73,7 +73,7 @@ export const Login = ({ onLoginSuccess }: LoginProps) => {
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute text-gray-500 -translate-y-1/2 right-3 top-1/2 hover:text-gray-700 focus:outline-none"
+              className="absolute theme-text-secondary -translate-y-1/2 right-3 top-1/2 hover:theme-text-primary focus:outline-none transition-colors"
               aria-label={
                 showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'
               }

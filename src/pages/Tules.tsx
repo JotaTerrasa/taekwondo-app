@@ -27,12 +27,12 @@ export const Tules = () => {
   return (
     <section className="flex flex-col gap-4 pt-4">
       {/* Barra de progreso */}
-      <div className="p-4 bg-white rounded-lg shadow-xs">
+      <div className="p-4 theme-bg-card rounded-lg shadow-xs">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-sm font-medium text-gray-700">Progreso total</span>
+          <span className="text-sm font-medium theme-text-primary">Progreso total</span>
           <span className="text-sm font-bold text-primary-500">{getCompletedCount()}/17 tules</span>
         </div>
-        <div className="w-full h-3 overflow-hidden bg-gray-200 rounded-full">
+        <div className="w-full h-3 overflow-hidden theme-bg-tertiary rounded-full">
           <div 
             className="h-full transition-all duration-500 rounded-full bg-gradient-to-r from-primary-500 to-red-400"
             style={{ width: `${getProgressPercentage()}%` }}
@@ -45,18 +45,18 @@ export const Tules = () => {
         
         {/* Buscador */}
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 theme-text-muted" />
           <input
             type="text"
             placeholder="Buscar por nombre, coreano, movimientos..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full h-12 pl-10 pr-10 text-gray-900 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            className="w-full h-12 pl-10 pr-10 theme-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
           />
           {searchQuery && (
             <button
               onClick={() => setSearchQuery('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              className="absolute right-3 top-1/2 -translate-y-1/2 theme-text-muted hover:theme-text-primary"
               aria-label="Limpiar búsqueda"
             >
               <X className="w-5 h-5" />
@@ -129,7 +129,7 @@ const TulCard = ({ tul }: { tul: Tul }) => {
   return (
     <Link
       to={`/tul/${tul.id}`}
-      className="relative flex flex-col gap-4 pb-4 overflow-hidden bg-white rounded-md shadow-xs"
+      className="relative flex flex-col gap-4 pb-4 overflow-hidden theme-bg-card rounded-md shadow-xs"
     >
       <div className="relative">
         <img src="/imgs/Rectangle.png" alt="Tul" className="w-full" />

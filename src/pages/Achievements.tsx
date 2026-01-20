@@ -26,7 +26,7 @@ export const Achievements = () => {
       className={`p-4 rounded-lg border transition-all ${
         isUnlocked
           ? 'border-green-200 bg-green-50 shadow-md'
-          : 'border-gray-200 bg-white opacity-60'
+          : 'theme-border theme-bg-card opacity-60'
       }`}
     >
       <div className="flex items-start gap-3">
@@ -36,7 +36,7 @@ export const Achievements = () => {
 
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-1">
-            <h3 className={`font-semibold ${isUnlocked ? 'text-gray-900' : 'text-gray-500'}`}>
+            <h3 className={`font-semibold ${isUnlocked ? 'theme-text-primary' : 'theme-text-muted'}`}>
               {achievement.title}
             </h3>
             {isUnlocked && (
@@ -44,7 +44,7 @@ export const Achievements = () => {
             )}
           </div>
 
-          <p className={`text-sm mb-2 ${isUnlocked ? 'text-gray-700' : 'text-gray-400'}`}>
+          <p className={`text-sm mb-2 ${isUnlocked ? 'theme-text-primary' : 'theme-text-muted'}`}>
             {achievement.description}
           </p>
 
@@ -54,7 +54,7 @@ export const Achievements = () => {
             </span>
 
             {isUnlocked && unlockedAt && (
-              <span className="text-xs text-gray-500">
+              <span className="text-xs theme-text-muted">
                 Desbloqueado {unlockedAt.toLocaleDateString()}
               </span>
             )}
@@ -83,7 +83,7 @@ export const Achievements = () => {
       {/* Header */}
       <div className="flex flex-col gap-2">
         <h1 className="text-2xl font-bold">Logros</h1>
-        <p className="text-gray-600">
+        <p className="theme-text-secondary">
           Tu colección de logros desbloqueados - {unlockedAchievements.length} de {achievements.length} completados
         </p>
       </div>
@@ -100,14 +100,14 @@ export const Achievements = () => {
           </div>
         </div>
 
-        <div className="w-full bg-gray-200 rounded-full h-3 mb-2">
+        <div className="w-full theme-bg-tertiary rounded-full h-3 mb-2">
           <div
             className="bg-gradient-to-r from-blue-500 to-purple-500 h-3 rounded-full transition-all duration-500"
             style={{ width: `${(unlockedAchievements.length / achievements.length) * 100}%` }}
           ></div>
         </div>
 
-        <p className="text-sm text-gray-600">
+        <p className="text-sm theme-text-secondary">
           {achievements.length - unlockedAchievements.length} logros restantes por desbloquear
         </p>
       </div>
@@ -140,7 +140,7 @@ export const Achievements = () => {
       {availableAchievements.length > 0 && (
         <div className="flex flex-col gap-4">
           <h2 className="text-xl font-semibold flex items-center gap-2">
-            <Lock className="w-5 h-5 text-gray-500" />
+            <Lock className="w-5 h-5 theme-text-muted" />
             Logros Disponibles ({availableAchievements.length})
           </h2>
 
@@ -160,10 +160,10 @@ export const Achievements = () => {
       {unlockedAchievements.length === 0 && (
         <div className="text-center py-12">
           <Trophy className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-gray-600 mb-2">
+          <h3 className="text-lg font-semibold theme-text-secondary mb-2">
             ¡Comienza tu colección de logros!
           </h3>
-          <p className="text-gray-500">
+          <p className="theme-text-muted">
             Completa tuls, estudia teoría y supera exámenes para desbloquear logros.
           </p>
         </div>

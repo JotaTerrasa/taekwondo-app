@@ -42,7 +42,7 @@ export const Theory = () => {
           </button>
           <button
             onClick={handleStartQuiz}
-            className="flex items-center gap-2 px-4 py-2 text-white rounded-lg bg-primary-500 hover:bg-phover-500"
+            className="flex items-center gap-2 px-4 py-2 text-white rounded-lg theme-btn"
           >
             <Play className="w-4 h-4" />
             Hacer quiz
@@ -76,7 +76,7 @@ export const Theory = () => {
       <div className="grid gap-4 sm:grid-cols-2">
         <button
           onClick={() => setViewMode('study')}
-          className="flex flex-col items-center gap-3 p-6 bg-white border-2 border-gray-200 rounded-lg hover:border-primary-500 transition-colors"
+          className="flex flex-col items-center gap-3 p-6 theme-bg-card theme-border border-2 rounded-lg hover:border-primary-500 transition-colors"
         >
           <BookOpen className="w-8 h-8 text-primary-500" />
           <span className="font-semibold">Estudiar por categorías</span>
@@ -87,7 +87,7 @@ export const Theory = () => {
 
         <button
           onClick={handleStartQuiz}
-          className="flex flex-col items-center gap-3 p-6 bg-white border-2 border-gray-200 rounded-lg hover:border-primary-500 transition-colors"
+          className="flex flex-col items-center gap-3 p-6 theme-bg-card theme-border border-2 rounded-lg hover:border-primary-500 transition-colors"
         >
           <Brain className="w-8 h-8 text-primary-500" />
           <span className="font-semibold">Quiz general</span>
@@ -107,7 +107,7 @@ export const Theory = () => {
               <button
                 key={category}
                 onClick={() => handleCategorySelect(category)}
-                className="flex items-center gap-3 p-4 text-left bg-white border border-gray-200 rounded-lg hover:border-primary-500 hover:shadow-md transition-all"
+                className="flex items-center gap-3 p-4 text-left theme-bg-card theme-border border rounded-lg hover:border-primary-500 hover:shadow-md transition-all"
               >
                 <span className="text-2xl">{categoryIcons[category]}</span>
                 <div className="flex-1">
@@ -127,7 +127,7 @@ export const Theory = () => {
 
 const VocabularyCard = ({ item }: { item: typeof vocabulary[0] }) => {
   return (
-    <div className="p-4 bg-white border border-gray-200 rounded-lg">
+    <div className="p-4 theme-bg-card theme-border border rounded-lg">
       <div className="flex items-start justify-between gap-2">
         <div className="flex-1">
           <p className="text-lg font-bold text-gray-800">{item.korean}</p>

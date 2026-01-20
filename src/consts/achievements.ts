@@ -226,7 +226,7 @@ export const getAchievementStats = (
 export const getRarityColor = (rarity: Achievement['rarity']): string => {
   switch (rarity) {
     case 'common':
-      return 'text-gray-600 bg-gray-100';
+      return 'theme-text-secondary theme-bg-tertiary';
     case 'rare':
       return 'text-blue-600 bg-blue-100';
     case 'epic':
@@ -234,7 +234,7 @@ export const getRarityColor = (rarity: Achievement['rarity']): string => {
     case 'legendary':
       return 'text-yellow-600 bg-yellow-100';
     default:
-      return 'text-gray-600 bg-gray-100';
+      return 'theme-text-secondary theme-bg-tertiary';
   }
 };
 

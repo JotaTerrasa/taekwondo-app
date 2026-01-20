@@ -97,9 +97,9 @@ export const MenuMobile = ({ isOpen, onClose, onLogout }: MenuMobileProps) => {
                 animation: isOpen
                   ? `slideIn 0.3s ease-out ${index * 0.05}s both`
                   : 'none',
-                backgroundColor: isActive ? 'rgba(128, 0, 0, 0.1)' : 'transparent',
-                color: isActive ? '#800000' : 'var(--text-primary)',
-                borderLeft: isActive ? '4px solid #800000' : 'none'
+                backgroundColor: isActive ? 'var(--active-bg)' : 'transparent',
+                color: isActive ? 'var(--active-text)' : 'var(--text-primary)',
+                borderLeft: isActive ? '4px solid var(--active-border)' : 'none'
               }}
               onMouseEnter={(e) => {
                 if (!isActive) e.currentTarget.style.backgroundColor = 'var(--hover-bg)';
@@ -108,7 +108,7 @@ export const MenuMobile = ({ isOpen, onClose, onLogout }: MenuMobileProps) => {
                 if (!isActive) e.currentTarget.style.backgroundColor = 'transparent';
               }}
             >
-              <span className="shrink-0" style={{ color: isActive ? '#800000' : 'var(--text-primary)' }}>{item.icon}</span>
+              <span className="shrink-0" style={{ color: isActive ? 'var(--active-text)' : 'var(--text-primary)' }}>{item.icon}</span>
               <span className="text-lg font-medium">{item.label}</span>
             </Link>
           );
