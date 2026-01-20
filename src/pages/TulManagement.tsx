@@ -43,7 +43,7 @@ export const TulManagement = () => {
 
       {/* Selector de estado */}
       <div className="flex flex-col gap-2">
-        <p className="text-sm font-medium text-gray-600">Tu progreso</p>
+        <p className="text-sm font-medium theme-text-secondary">Tu progreso</p>
         <div className="flex gap-2">
           {statusOptions.map(({ value, label, icon: Icon, activeClass }) => (
             <button

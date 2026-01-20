@@ -159,7 +159,7 @@ export const Achievements = () => {
       {/* Motivational Message */}
       {unlockedAchievements.length === 0 && (
         <div className="text-center py-12">
-          <Trophy className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+          <Trophy className="w-16 h-16 theme-text-muted mx-auto mb-4" />
           <h3 className="text-lg font-semibold theme-text-secondary mb-2">
             ¡Comienza tu colección de logros!
           </h3>

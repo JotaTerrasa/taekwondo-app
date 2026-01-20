@@ -66,7 +66,7 @@ export const Tules = () => {
 
         {/* Contador de resultados */}
         {searchQuery && (
-          <p className="text-sm text-gray-500">
+          <p className="text-sm theme-text-muted">
             {filteredTuls.length} {filteredTuls.length === 1 ? 'tul encontrado' : 'tules encontrados'}
           </p>
         )}
@@ -81,10 +81,10 @@ export const Tules = () => {
         </article>
       ) : (
         <div className="flex flex-col items-center justify-center gap-4 py-12 text-center">
-          <Search className="w-12 h-12 text-gray-300" />
+          <Search className="w-12 h-12 theme-text-muted" />
           <div>
-            <p className="font-medium text-gray-600">No se encontraron tules</p>
-            <p className="text-sm text-gray-500">
+            <p className="font-medium theme-text-secondary">No se encontraron tules</p>
+            <p className="text-sm theme-text-muted">
               Intenta buscar con otro término
             </p>
           </div>
@@ -108,7 +108,7 @@ const StatusBadge = ({ status }: { status: TulStatus }) => {
     },
     not_started: {
       icon: Circle,
-      bg: 'bg-gray-300',
+      bg: 'theme-bg-tertiary',
       text: 'Sin empezar',
     },
   };
@@ -117,7 +117,7 @@ const StatusBadge = ({ status }: { status: TulStatus }) => {
 
   return (
     <div className={`absolute top-2 right-2 p-1.5 rounded-full ${bg} shadow-md`}>
-      <Icon className="w-3.5 h-3.5 text-white" strokeWidth={3} />
+      <Icon className="w-3.5 h-3.5 theme-text-primary" strokeWidth={3} />
     </div>
   );
 };
@@ -137,7 +137,7 @@ const TulCard = ({ tul }: { tul: Tul }) => {
       </div>
       <div className="flex flex-col px-4">
         <h2 className="text-lg font-medium">{tul.name}</h2>
-        <p className="text-sm text-gray-500">{tul.moves} movimientos</p>
+        <p className="text-sm theme-text-muted">{tul.moves} movimientos</p>
       </div>
     </Link>
   );

@@ -43,7 +43,7 @@ export const Exams = () => {
             <div className="flex items-center gap-2 mt-2">
               <div className="flex-1 h-2 overflow-hidden rounded-full" style={{ backgroundColor: 'rgba(255, 255, 255, 0.3)' }}>
                 <div
-                  className="h-full transition-all duration-500 bg-white rounded-full"
+                  className="h-full transition-all duration-500 bg-white rounded-full" style={{ backgroundColor: 'white' }}
                   style={{ width: `${getProgressPercentage()}%` }}
                 />
               </div>

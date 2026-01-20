@@ -29,7 +29,7 @@ export const ExamDetail = () => {
   if (!exam) {
     return (
       <div className="flex flex-col items-center justify-center gap-4 py-12">
-        <p className="text-gray-500">Examen no encontrado</p>
+        <p className="theme-text-muted">Examen no encontrado</p>
         <Link to="/" className="text-primary-500 underline">
           Volver al inicio
         </Link>
@@ -55,8 +55,8 @@ export const ExamDetail = () => {
           className="w-24"
         />
         <div>
-          <h1 className="text-2xl font-bold text-gray-800">{exam.range}</h1>
-          <p className="text-gray-500">{exam.color}</p>
+          <h1 className="text-2xl font-bold theme-text-primary">{exam.range}</h1>
+          <p className="theme-text-muted">{exam.color}</p>
         </div>
       </div>
 
@@ -64,7 +64,7 @@ export const ExamDetail = () => {
       {requiredTuls.length > 0 && (
         <div className="p-4 rounded-lg theme-bg-secondary">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm font-medium text-gray-600">
+            <span className="text-sm font-medium theme-text-secondary">
               Progreso de tules
             </span>
             <span className="text-sm font-bold text-primary-500">
@@ -106,12 +106,12 @@ export const ExamDetail = () => {
                           ? 'bg-green-500'
                           : status === 'in_progress'
                           ? 'bg-amber-500'
-                          : 'bg-gray-300'
+                          : 'theme-bg-tertiary'
                       }`}
                     />
                     <div>
                       <p className="font-medium">{tul.name}</p>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs theme-text-muted">
                         {tul.moves} movimientos
                       </p>
                     </div>
@@ -122,7 +122,7 @@ export const ExamDetail = () => {
             })}
           </div>
         ) : (
-          <p className="text-gray-500 text-sm">
+          <p className="theme-text-muted text-sm">
             No hay tules específicos para este nivel.
           </p>
         )}

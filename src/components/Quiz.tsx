@@ -84,7 +84,7 @@ export const Quiz = ({ items, onBack }: QuizProps) => {
   if (questions.length === 0) {
     return (
       <section className="flex flex-col items-center justify-center gap-4 py-12">
-        <p className="text-gray-500">No hay suficientes palabras para el quiz</p>
+        <p className="theme-text-muted">No hay suficientes palabras para el quiz</p>
         <button
           onClick={onBack}
           className="text-primary-500 hover:underline"
@@ -136,7 +136,7 @@ export const Quiz = ({ items, onBack }: QuizProps) => {
           <ArrowLeft className="w-4 h-4" />
           Volver
         </button>
-        <div className="text-sm text-gray-500">
+        <div className="text-sm theme-text-muted">
           Pregunta {currentIndex + 1} de {questions.length}
         </div>
       </div>
@@ -150,12 +150,12 @@ export const Quiz = ({ items, onBack }: QuizProps) => {
       </div>
 
       {/* Pregunta */}
-      <div className="flex flex-col items-center gap-4 p-8 bg-white rounded-xl shadow-lg">
+        <div className="flex flex-col items-center gap-4 p-8 theme-bg-card rounded-xl shadow-lg">
         <div className="text-center">
-          <p className="text-3xl font-bold text-gray-800 mb-2">
+          <p className="text-3xl font-bold theme-text-primary mb-2">
             {currentQuestion.question.korean}
           </p>
-          <p className="text-lg text-gray-500 italic">
+          <p className="text-lg theme-text-muted italic">
             {currentQuestion.question.pronunciation}
           </p>
         </div>
@@ -210,7 +210,7 @@ export const Quiz = ({ items, onBack }: QuizProps) => {
       </div>
 
       {/* Puntuación actual */}
-      <div className="text-center text-sm text-gray-500">
+      <div className="text-center text-sm theme-text-muted">
         Puntuación: {score} / {currentIndex + 1}
       </div>
     </section>

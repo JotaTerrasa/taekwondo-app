@@ -34,8 +34,8 @@ export const InstallPWA = () => {
   return (
     <div className="w-full max-w-sm fixed bottom-6 max-md:left-1/2 max-md:-translate-x-1/2 md:right-6 z-50 px-4">
       <section className="rounded-lg theme-bg-card p-6 shadow-xl">
-        <h2 className="text-lg font-semibold text-gray-900">Instala la app</h2>
-        <p className="mt-2 text-sm text-gray-600">
+        <h2 className="text-lg font-semibold theme-text-primary">Instala la app</h2>
+        <p className="mt-2 text-sm theme-text-secondary">
           Añade Taekwondo App a tu dispositivo para un acceso más rápido.
         </p>
         <div className="mt-4 flex gap-3 flex-wrap">

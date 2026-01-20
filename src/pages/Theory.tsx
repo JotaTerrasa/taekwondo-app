@@ -67,7 +67,7 @@ export const Theory = () => {
     <section className="flex flex-col gap-6 pt-4">
       <div className="flex flex-col gap-2">
         <h1 className="text-2xl font-bold">Teoría de Taekwondo</h1>
-        <p className="text-gray-600">
+        <p className="theme-text-secondary">
           Aprende vocabulario coreano esencial para tu práctica
         </p>
       </div>
@@ -80,7 +80,7 @@ export const Theory = () => {
         >
           <BookOpen className="w-8 h-8 text-primary-500" />
           <span className="font-semibold">Estudiar por categorías</span>
-          <span className="text-sm text-gray-500 text-center">
+          <span className="text-sm theme-text-muted text-center">
             Explora el vocabulario organizado por temas
           </span>
         </button>
@@ -91,7 +91,7 @@ export const Theory = () => {
         >
           <Brain className="w-8 h-8 text-primary-500" />
           <span className="font-semibold">Quiz general</span>
-          <span className="text-sm text-gray-500 text-center">
+          <span className="text-sm theme-text-muted text-center">
             Pon a prueba tus conocimientos
           </span>
         </button>
@@ -112,7 +112,7 @@ export const Theory = () => {
                 <span className="text-2xl">{categoryIcons[category]}</span>
                 <div className="flex-1">
                   <h3 className="font-semibold">{categoryLabels[category]}</h3>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm theme-text-muted">
                     {categoryItems.length} palabras
                   </p>
                 </div>
@@ -130,8 +130,8 @@ const VocabularyCard = ({ item }: { item: typeof vocabulary[0] }) => {
     <div className="p-4 theme-bg-card theme-border border rounded-lg">
       <div className="flex items-start justify-between gap-2">
         <div className="flex-1">
-          <p className="text-lg font-bold text-gray-800">{item.korean}</p>
-          <p className="text-sm text-gray-500 italic">{item.pronunciation}</p>
+          <p className="text-lg font-bold theme-text-primary">{item.korean}</p>
+          <p className="text-sm theme-text-muted italic">{item.pronunciation}</p>
           <p className="mt-1 font-medium text-primary-500">{item.spanish}</p>
         </div>
       </div>

@@ -87,7 +87,7 @@ export const Account = () => {
             )}
           </button>
           <div className="absolute bottom-0 right-0 flex items-center justify-center w-10 h-10 border-2 border-white rounded-full" style={{ backgroundColor: 'var(--accent-primary)' }}>
-            <Edit width={16} height={16} color="#ffffff" />
+            <Edit width={16} height={16} style={{ color: 'var(--text-primary)' }} />
           </div>
           <input
             ref={fileInputRef}
@@ -173,12 +173,12 @@ export const Account = () => {
                 onClick={() => setTheme('light')}
                 className="flex flex-col items-center gap-2 p-3 rounded-lg border-2 transition-all hover:scale-105"
                 style={{
-                  backgroundColor: theme === 'light' ? '#800000' : 'var(--input-bg)',
-                  borderColor: theme === 'light' ? '#800000' : 'var(--border-color)',
-                  color: theme === 'light' ? '#ffffff' : 'var(--text-secondary)'
+                  backgroundColor: theme === 'light' ? 'var(--accent-primary)' : 'var(--input-bg)',
+                  borderColor: theme === 'light' ? 'var(--accent-primary)' : 'var(--border-color)',
+                  color: theme === 'light' ? 'white' : 'var(--text-secondary)'
                 }}
               >
-                <Sun className="w-6 h-6" style={{ color: theme === 'light' ? '#ffffff' : 'var(--text-muted)' }} />
+                <Sun className="w-6 h-6" style={{ color: theme === 'light' ? 'white' : 'var(--text-muted)' }} />
                 <span className="text-xs font-medium">Claro</span>
               </button>
 
@@ -186,12 +186,12 @@ export const Account = () => {
                 onClick={() => setTheme('dark')}
                 className="flex flex-col items-center gap-2 p-3 rounded-lg border-2 transition-all hover:scale-105"
                 style={{
-                  backgroundColor: theme === 'dark' ? '#800000' : 'var(--input-bg)',
-                  borderColor: theme === 'dark' ? '#800000' : 'var(--border-color)',
-                  color: theme === 'dark' ? '#ffffff' : 'var(--text-secondary)'
+                  backgroundColor: theme === 'dark' ? 'var(--accent-primary)' : 'var(--input-bg)',
+                  borderColor: theme === 'dark' ? 'var(--accent-primary)' : 'var(--border-color)',
+                  color: theme === 'dark' ? 'white' : 'var(--text-secondary)'
                 }}
               >
-                <Moon className="w-6 h-6" style={{ color: theme === 'dark' ? '#ffffff' : 'var(--text-muted)' }} />
+                <Moon className="w-6 h-6" style={{ color: theme === 'dark' ? 'white' : 'var(--text-muted)' }} />
                 <span className="text-xs font-medium">Oscuro</span>
               </button>
 
@@ -199,12 +199,12 @@ export const Account = () => {
                 onClick={() => setTheme('system')}
                 className="flex flex-col items-center gap-2 p-3 rounded-lg border-2 transition-all hover:scale-105"
                 style={{
-                  backgroundColor: theme === 'system' ? '#800000' : 'var(--input-bg)',
-                  borderColor: theme === 'system' ? '#800000' : 'var(--border-color)',
-                  color: theme === 'system' ? '#ffffff' : 'var(--text-secondary)'
+                  backgroundColor: theme === 'system' ? 'var(--accent-primary)' : 'var(--input-bg)',
+                  borderColor: theme === 'system' ? 'var(--accent-primary)' : 'var(--border-color)',
+                  color: theme === 'system' ? 'white' : 'var(--text-secondary)'
                 }}
               >
-                <Monitor className="w-6 h-6" style={{ color: theme === 'system' ? '#ffffff' : 'var(--text-muted)' }} />
+                <Monitor className="w-6 h-6" style={{ color: theme === 'system' ? 'white' : 'var(--text-muted)' }} />
                 <span className="text-xs font-medium">Sistema</span>
               </button>
             </div>
