@@ -5,8 +5,7 @@ import { Trophy, Lock, Star } from 'lucide-react';
 export const Achievements = () => {
   const {
     unlockedAchievements,
-    availableAchievements,
-    getAchievementProgress
+    availableAchievements
   } = useProgress();
 
   const unlockedAchievementObjects = unlockedAchievements.map(ua =>

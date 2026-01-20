@@ -19,8 +19,7 @@ export const Dashboard = () => {
   const inProgressCount = getInProgressCount();
   const progressPercentage = getProgressPercentage();
 
-  // Calcular estadísticas adicionales (solo se usa streakDays por ahora)
-  const streakDays = currentStreak;
+  // Estadísticas calculadas
 
   // Logros recientes (últimos 3 desbloqueados)
   const recentAchievements = unlockedAchievements
